@@ -11,3 +11,5 @@ function abrirConfirmarCancha(idPartido) {
     document.getElementById('partidoAConfirmar').value = idPartido;
 }
 
+
+

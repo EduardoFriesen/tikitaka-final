@@ -57,8 +57,8 @@ const usuarioController = {
   // Modificar usuario (por admin)
   modUserAdmin: async (req, res) => {
     try {
-      const { username, name, lastname, birthdate, email } = req.body;
-      const usuario = await usuarioServices.modUserAdmin({ username, name, lastname, birthdate, email });
+      const { username, name, lastname, birthdate, email, admin} = req.body;
+      const usuario = await usuarioServices.modUserAdmin({ username, name, lastname, birthdate, email, admin });
       res.send({ success: true, usuario });
     } catch (error) {
       res.send({ success: false, message: error.message });

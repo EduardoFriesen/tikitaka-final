@@ -27,8 +27,8 @@ async function cargarUsers(){
             <td>${usuario.admin}</td>
             <td>
              <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditar"
-                onclick="cargarDatosEditar('${usuario.username}', '${usuario.name}', '${usuario.lastname}', '${usuario.birthdate}', '${usuario.email}', '${usuario.admin}')">Editar</button>
-            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalEliminar"
+                onclick="cargarDatosEditar('${usuario.username}', '${usuario.name}', '${usuario.lastname}', '${usuario.birthdate}', '${usuario.email}', '${usuario.admin.checked}')">Editar</button>
+            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalPrueba"
                 onclick="prepararEliminarUser(${usuario.id}, '${usuario.username}')">Eliminar</button>
             </td>
                 `;
@@ -61,23 +61,9 @@ async function cargarUser(){
     }
 }
 
-let idUsuarioAEliminar = null;
-
-function prepararEliminarUser(id, username) {
-    idUsuarioAEliminar = id;
-    document.getElementById('usuarioEliminar').innerText = username;
-}
-
-function confirmarEliminarUser() {
-    if (idUsuarioAEliminar !== null) {
-        eliminarUser(idUsuarioAEliminar);
-        idUsuarioAEliminar = null;
-    }
-}
-
 async function modificarUser() {
 
-    const user = document.getElementById('user').value;
+    const username = document.getElementById('user').value;
     const name = document.getElementById('name').value;
     const lastname = document.getElementById('lastname').value;
     const email = document.getElementById('email').value;
@@ -95,7 +81,7 @@ async function modificarUser() {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + token
         },
-        body: JSON.stringify({ user, name, lastname, email, birthdate, admin})
+        body: JSON.stringify({ username, name, lastname, email, birthdate, admin})
     });
     if (res.status === 401 || res.status === 403) {
         window.location.href = 'login.html';
@@ -149,6 +135,24 @@ async function eliminarUser(id){
         msgDiv.style.display = 'block';
         msgDiv.className = "alert alert-warning d-flex align-items-center text-center"; // Cambia la clase para aplicar estilos de error
         msgDiv.innerText = data.message;
+    }
+}
+
+let idUsuarioAEliminar = null;
+
+function prepararEliminarUser(id, username) {
+  console.log("Preparando modal para:", id, username);
+  idUsuarioAEliminar = id;
+  document.getElementById('usuarioEliminar').innerText = username;
+}
+
+function confirmarEliminarUser() {
+    if (idUsuarioAEliminar !== null) {
+        console.log("Confirmando eliminación de usuario con ID:", idUsuarioAEliminar);
+        eliminarUser(idUsuarioAEliminar);
+        idUsuarioAEliminar = null;
+        const modal = bootstrap.Modal.getInstance(document.getElementById('modalPrueba'));
+        if (modal) modal.hide();
     }
 }
 
@@ -216,3 +220,5 @@ async function cargarDatos(){
         document.getElementById('cantPartidos').innerText = 'Error';
     }
 }
+window.prepararEliminarUser = prepararEliminarUser;
+window.confirmarEliminarUser = confirmarEliminarUser;
