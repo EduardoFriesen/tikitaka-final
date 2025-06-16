@@ -1,0 +1,51 @@
+   button:hover {
+      transform: scale(1.05);
+    }
+
+    #boton {
+      color: white;
+      background-color: rgba(182, 194, 179, 1);
+      height: 70px;
+      width: 75%;
+      border: none;
+      font-size: 24px;
+      border-radius: 20px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease-in-out;
+      margin: 20px auto;
+    }
+
+    .card {
+      background-color: white;
+    }
+
+    .btn-editar {
+      background-color: rgba(82, 131, 71, 1);
+      color: white;
+      border: none;
+    }
+    .btn-eliminar {
+      background-color: rgb(255, 0, 0);
+      color: white;
+      border: none;
+    }
+
+    .btn-editar:hover, .btn-eliminar:hover {
+      background-color: rgba(60, 100, 52, 1);
+    }
+    .btn-eliminar:hover {
+      background-color: rgb(148, 32, 32);
+    }
+
+    .btn-nuevo {
+      background-color: rgba(82, 131, 71, 1);
+      color: white;
+      border: none;
+    }
+
+    .btn-nuevo:hover {
+      background-color: rgba(60, 100, 52, 1);
+    }

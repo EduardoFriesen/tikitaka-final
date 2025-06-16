@@ -1,0 +1,84 @@
+ body {
+            margin: 0;
+        }
+
+        #boton {
+            color: white;
+            background-color: rgba(182, 194, 179, 1);
+            height: 70px;
+            width: 75%;
+            border: none;
+            font-size: 24px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.5s ease-in-out;
+            margin: 20px auto;
+        }
+
+        #boton:hover {
+            transform: scale(1.1);
+        }
+
+        .form-control {
+            border-radius: 15px;
+            font-size: 18px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        .sidebar {
+            background-color: rgba(82, 131, 71, 1);
+            height: 100vh;
+            color: white;
+            padding-top: 20px;
+        }
+
+        .sidebar img {
+            margin-left: 20px;
+        }
+
+        .form-section {
+            background-color: rgba(182, 194, 179, 1);
+            height: 100vh;
+            padding: 40px;
+        }
+
+        h2 {
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .btn-enviar {
+            background-color: #528347;
+            color: white;
+            font-weight: bold;
+            border: none;
+            border-radius: 15px;
+            padding: 10px 20px;
+            font-size: 20px;
+        }
+
+        .btn-enviar:hover {
+            background-color: #416b38;
+        }
+
+        .cerrar-sesion {
+            margin-top: 100px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .cerrar-sesion a {
+            color: white;
+            text-decoration: underline;
+        }

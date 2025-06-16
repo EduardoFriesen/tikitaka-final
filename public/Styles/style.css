@@ -1,0 +1,40 @@
+.bg{
+    background-color: #4C743E;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+    margin: 0px;
+}
+.bg2{
+background-color: rgba(217, 217, 217, 0.5); 
+border-radius: 10px;
+padding: 20px;
+height: 910px;
+height: 720px;
+margin: 20px;
+}
+.logo{
+width: 250px;
+height: 250px;
+}
+.btntiki{
+    background-color: #4C743E;
+    color: #FFFFFF;
+    font-weight: bold;
+    border-radius: 10px;
+    border: none;
+}
+.btntiki:hover{
+    background-color: #3A5B2A;
+    color: #FFFFFF;
+    font-weight: bold;
+    border-radius: 10px;
+    border: none;
+}
+.textos{
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+

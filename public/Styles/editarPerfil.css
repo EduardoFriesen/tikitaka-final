@@ -1,0 +1,23 @@
+
+    button:hover {
+      transform: scale(1.1); 
+    }
+
+
+        #boton{
+            color: white;
+            background-color: rgba(182, 194, 179, 1);
+            height: 70px;
+            width: 75%;
+            border:none;
+            font-size: 24px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.5s ease-in-out;
+            margin: 20px;
+            margin-top: 40px;
+            margin-left: 55px;
+        }
