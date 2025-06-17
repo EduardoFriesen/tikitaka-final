@@ -6,6 +6,13 @@ require('./models');
 const usuarioRoutes = require('./routes/usuarioRoutes');
 const partidoRoutes = require('./routes/partidoRoutes');
 const turnoRoutes = require('./routes/turnoRoutes');
+const jugadorRoutes = require('./routes/jugadorRoutes');
+const equipoRoutes = require('./routes/equipoRoutes');
+const torneoRoutes = require('./routes/torneoRoutes');
+const equipoTorneoRoutes = require('./routes/equipoTorneoRoutes');
+const partidoTorneoRoutes = require('./routes/partidoTorneoRoutes');
+const jugadorTorneoRoutes = require('./routes/jugadorTorneoRoutes');
+
 
 // Middlewares
 app.use(express.json());
@@ -14,6 +21,12 @@ app.use(express.json());
 app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/partidos', partidoRoutes);
 app.use('/api/turnos', turnoRoutes);
+app.use('/api/jugadores', jugadorRoutes);
+app.use('/api/equipos', equipoRoutes);
+app.use('/api/torneos', torneoRoutes);
+app.use('/api/partidosTorneo', partidoTorneoRoutes);
+app.use('/api/equiposTorneo', equipoTorneoRoutes);
+
 app.use(express.static('public'));
 
 // Conexión a la base de datos y arranque del servidor
