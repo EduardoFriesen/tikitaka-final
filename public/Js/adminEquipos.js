@@ -49,9 +49,18 @@ async function cargarEquipos() {
             const li = document.createElement('li');
             li.className = 'list-group-item d-flex justify-content-between align-items-center';
             li.innerHTML = `
-                <span>${equipo.nombre}</span>
-                <button class="btn btn-danger btn-sm" onclick="eliminarEquipo(${equipo.id})">Eliminar</button>
-            `;
+                <div class="card" style="width: 18rem;">
+                    <img src="/img/Cómo-hacer-una-cancha-de-fútbol.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <form id="fichajeForm">
+                            <input type="hidden" id="id_partido" value="${equipo.id}">
+                            <h5 class="card-title">${equipo.nombre}</h5>
+                            <button class="btn btn-editar btn-sm" onclick="editarEquipo(${equipo.id})">Editar</button>
+                            <button class="btn btn-jugadores btn-sm" onclick="jugadoresEquipo(${equipo.id})">Jugadores</button>
+                            <button class="btn btn-eliminar btn-sm" onclick="eliminarEquipo(${equipo.id})">Eliminar</button>
+                        </form>
+                    </div>
+                </div>`;
             equiposList.appendChild(li);
         });
     } else {

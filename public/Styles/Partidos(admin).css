@@ -33,11 +33,20 @@
       border: none;
     }
 
+    .btn-jugadores {
+      background-color: rgb(55, 0, 255);
+      color: white;
+      border: none;
+    }
+
     .btn-editar:hover, .btn-eliminar:hover {
       background-color: rgba(60, 100, 52, 1);
     }
     .btn-eliminar:hover {
       background-color: rgb(148, 32, 32);
+    }
+    .btn-jugadores:hover {
+      background-color: blue;
     }
 
     .btn-nuevo {
