@@ -11,7 +11,6 @@ const equipoRoutes = require('./routes/equipoRoutes');
 const torneoRoutes = require('./routes/torneoRoutes');
 const equipoTorneoRoutes = require('./routes/equipoTorneoRoutes');
 const partidoTorneoRoutes = require('./routes/partidoTorneoRoutes');
-const jugadorTorneoRoutes = require('./routes/jugadorTorneoRoutes');
 
 
 // Middlewares

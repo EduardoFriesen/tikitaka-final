@@ -56,3 +56,6 @@ const fechaController = {
         }
     }
 };
+
+// Exportar el controlador
+module.exports = fechaController;

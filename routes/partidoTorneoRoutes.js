@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const partidoTorneoController = require('../controllers/partidoTorneoController');
+const partidoTorneoController = require('../controller/partidoTorneoController');
 const verificarToken = require('../middlewares/authMiddleware');
 const verificarAdmin = require('../middlewares/adminMiddleware');
 // Crear partido

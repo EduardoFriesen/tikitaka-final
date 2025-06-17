@@ -1,6 +1,10 @@
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
     class Fecha extends Model {
+        static associate(models) {
+            Fecha.belongsTo(models.Torneo, { as: 'Torneo', foreignKey: 'id_torneo' });
+            Fecha.hasMany(models.partidoTorneo, { as: 'Partidos', foreignKey: 'id_fecha' });
+        }
     }
         Fecha.init({
             id: {
@@ -22,10 +26,10 @@ module.exports = (sequelize, DataTypes) => {
             },
         },{
             sequelize,
-            modelName: 'Equipo',
-            tableName: 'equipos',
+            modelName: 'Fecha',
+            tableName: 'fechas',
             timestamps: false
         });
-    return Equipo;
+    return Fecha;
        
 }

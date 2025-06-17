@@ -56,3 +56,5 @@ const equipoTorneoController = {
         }
     }
 };
+
+module.exports = equipoTorneoController;

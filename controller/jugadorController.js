@@ -56,3 +56,4 @@ const jugadorController = {
         }
     }
 };
+module.exports = jugadorController;
