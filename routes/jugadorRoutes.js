@@ -4,9 +4,9 @@ const jugadorController = require('../controller/jugadorController');
 const verificarToken = require('../middlewares/authMiddleware');
 const verificarAdmin = require('../middlewares/adminMiddleware');
 // Crear jugador
-router.post('/crearJugador', verificarToken, jugadorController.crearJugador);
+router.post('/fichar/:id', verificarToken, jugadorController.ficharJugador);
 // Obtener todos los jugadores
-router.get('/obtenerJugadores', verificarToken, jugadorController.obtenerJugadores);
+router.get('/equipo/:id', verificarToken, jugadorController.obtenerJugadoresPorEquipo);
 // Obtener jugador por ID
 router.get('/obtenerJugador/:id', verificarToken, jugadorController.obtenerJugadorPorId);
 // Actualizar jugador
