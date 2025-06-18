@@ -54,6 +54,27 @@ const torneoController = {
         } catch (error) {
             res.send({ success: false, message: error.message });
         }
+    },
+
+    // Confirmar torneo
+    confirmarTorneo: async (req, res) => {
+        try {
+            const id = req.params.id;
+            const torneo = await torneoServices.confirmarTorneo(id);
+            res.send({ success: true, torneo });
+        } catch (error) {
+            res.send({ success: false, message: error.message });
+        }
+    },
+    // Finalizar torneo
+    finalizarTorneo: async (req, res) => {
+        try {
+            const id = req.params.id;
+            const torneo = await torneoServices.finalizarTorneo(id);
+            res.send({ success: true, torneo });
+        } catch (error) {
+            res.send({ success: false, message: error.message });
+        }
     }
 };
 module.exports = torneoController;

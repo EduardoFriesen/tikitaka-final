@@ -26,7 +26,7 @@ async function fichar() {
         }
 
         alert('Jugador fichado correctamente');
-        cargarJugadores();
+        cargarJugadores()
         document.getElementById('ficharModal').modal('hide');
     } catch (error) {
         console.error('Error al fichar jugador:', error);

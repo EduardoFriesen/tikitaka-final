@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Administrador - Partidos</title>
+  <title>Administrador - Torneos</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
   <style>
         .cerrar-sesion{
@@ -30,7 +30,7 @@
       </a>
     </div>
     <div class="col d-flex align-items-center" style="color: white; font-size: 40px;">
-      Partidos
+      Torneos
     </div>
   </div>
 </div>
@@ -47,10 +47,10 @@
       <button type="button" id="boton" onclick="window.location.href='Dashboard(admin).html'" class="btn btn-lg">DashBoard</button>
     </div>
     <div class="row">
-      <button type="button" id="boton" onclick="window.location.href='Partidos(admmin).html'" class="btn btn-lg">Partidos</button>
+      <button type="button" id="boton" onclick="window.location.href='Partidos(admin).html'" class="btn btn-lg">Partidos</button>
     </div> 
     <div class="row">
-      <button type="button" id="boton" onclick="window.location.href='''equipos(admin).html'" class="btn btn-lg">Equipos</button>
+      <button type="button" id="boton" onclick="window.location.href='equipos(admin).html'" class="btn btn-lg">Equipos</button>
     </div>
     <div class="row">
       <button type="button" id="boton" onclick="window.location.href='Jugadores(admin).html'" class="btn btn-lg">Jugadores</button>
@@ -67,50 +67,22 @@
 
 
 <div class="container d-flex justify-content-center">
-    <div class="d-flex flex-wrap justify-content-center" id="partidosList"></div>
+    <div class="d-flex flex-wrap justify-content-center" id="torneosList"></div>
 </div>    
 <div id="message" style="display:none;"></div>   
-
-<!-- Ubiquen bien este boton -->
-<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#crearModal">
-  Crear Partido
-</button>
-
-<div class="modal fade" id="crearModal" tabindex="-1" aria-labelledby="crearModalLabel" aria-hidden="true" style = "position: fixed;">
+<div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5">Crear Nuevo Partido</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-      <form id = "crearPartido">
-      <div class="modal-body">
-        <input id="username" class="form-control mb-2" name = "username" placeholder="Nombre de usuario (Ej: DiegoMaradona123)" required />
-        <input id="jugadores" class="form-control mb-2" name = "jugadores" placeholder="Cantidad (Ej: 12/14)" required />
-        <input id="fecha" type="date" class="form-control mb-2" name = "fecha" required />
-        <input id="horario" type="time" class="form-control mb-2" name = "horario" required />
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button id="btnCrearPartido" type="submit" class="btn btn-success">Crear</button>
-      </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5">Editar Partido</h1>
+        <h1 class="modal-title fs-5">Editar Torneo</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
       <div class="modal-body">
-      <form id = "modificarPartido">
-        <input id="jugadores" class="form-control mb-2" />
-        <input id="fecha" type="date" class="form-control mb-2" />
-        <input id="horario" type="time" class="form-control mb-2" />
+      <form id = "modificarTorneo">
+        <input type="hidden" id="modId" name="modId"/>
+        <input id="modNombre" class="form-control mb-2" name = "modNombre" placeholder="Nombre del Torneo" required />
+        <input id="modFechaInicio" type="date" class="form-control mb-2" name = "modFechaInicio" required />
+        <input id="modFechaFin" type="date" class="form-control mb-2" name = "modFechaFin" required />
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -121,56 +93,69 @@
   </div>
 </div>
 
-<div class="modal fade" id="modalConfirmarCancha" tabindex="-1" aria-labelledby="modalConfirmarCanchaLabel" aria-hidden="true">
+<div class="modal fade" id="modalEliminar" tabindex="-1" aria-labelledby="eliminarModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form id="formConfirmarCancha">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalConfirmarCanchaLabel">Asignar número de cancha</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-        </div>
-        <div class="modal-body">
-          <input type="hidden" id="partidoAConfirmar">
-          <div class="mb-3">
-            <label for="numeroCancha" class="form-label">Número de cancha</label>
-            <input type="number" class="form-control" id="numeroCancha" name="numeroCancha" min="1" required>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-success">Confirmar</button>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        </div>
+      <div class="modal-header">
+        <h5 class="modal-title" id="eliminarModalLabel">Eliminar Torneo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="delId" name="delId"/>
+        ¿Estás seguro que deseas eliminar el Torneo <strong id="delName"></strong>?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" onclick="eliminarTorneo()">Eliminar</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Ubiquen bien este boton -->
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#crearModal">
+  Crear Torneo
+</button>
+
+<div class="modal fade" id="crearModal" tabindex="-1" aria-labelledby="crearModalLabel" aria-hidden="true" style = "position: fixed;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Crear Nuevo Torneo</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <form id = "crearTorneo">
+      <div class="modal-body">
+        <input id="nombre" class="form-control mb-2" name = "username" placeholder="Nombre del Torneo" required />
+        <input id="fechaInicio" type="date" class="form-control mb-2" name = "fechaInicio" required />
+        <input id="fechaFin" type="date" class="form-control mb-2" name = "fechaFin" required />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button id="btnCrearTorneo" type="submit" class="btn btn-success">Crear</button>
+      </div>
       </form>
     </div>
   </div>
 </div>
 
 
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 
 </script>
-<script src="/Js/adminPartidos.js"></script>
+<script src="/Js/adminTorneos.js"></script>
 <script src="/Js/desplegables.js"></script>
 <script src="/Js/sesion.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const inputFecha = document.getElementById('fecha');
-        const hoy = new Date();
-        const yyyy = hoy.getFullYear();
-        const mm = String(hoy.getMonth() + 1).padStart(2, '0');
-        const dd = String(hoy.getDate()).padStart(2, '0');
-        const fechaMin = `${yyyy}-${mm}-${dd}`;
-        inputFecha.min = fechaMin;
-      });
-    mostrarPartidos();
-    document.getElementById('crearPartido').addEventListener('submit', function(event) {
+    mostrarTorneos();
+    document.getElementById('crearTorneo').addEventListener('submit', function(event) {
       event.preventDefault();
-      crearPartidoAdmin();
+      crearTorneo();
     });
-    document.getElementById('modificarPartido').addEventListener('submit', function(event) {
+    document.getElementById('modificarTorneo').addEventListener('submit', function(event) {
       event.preventDefault();
-      modificarPartido();
+      modificarTorneo();
     });
 </script>
 </body>

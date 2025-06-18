@@ -9,7 +9,7 @@ const torneoServices = {
 
     // Obtener todos los torneos
     obtenerTorneos: async () => {
-        return await Torneo.findAll();
+        return await Torneo.findAll({where: { finalizado: false }});
     },
 
     // Obtener torneo por ID
@@ -36,5 +36,22 @@ const torneoServices = {
         if (!torneo) throw new Error('Torneo no encontrado');
         await torneo.destroy();
         return { message: 'Torneo eliminado' };
+    },
+
+    confirmarTorneo: async (id) => {
+        const torneo = await Torneo.findByPk(id);
+        if (!torneo) throw new Error('Torneo no encontrado');
+        torneo.confirmado = true;
+        await torneo.save();
+        return torneo;
+    },
+
+    finalizarTorneo: async (id) => {
+        const torneo = await Torneo.findByPk(id);
+        if (!torneo) throw new Error('Torneo no encontrado');
+        torneo.finalizado = true;
+        await torneo.save();
+        return torneo;
     }
 };
+module.exports = torneoServices;

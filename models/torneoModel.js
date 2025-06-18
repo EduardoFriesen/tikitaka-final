@@ -20,6 +20,14 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.DATE,
                 allowNull: false
             },
+            confirmado: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: false
+            },
+            finalizado: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: false
+            }
         },{
             sequelize,
             modelName: 'Torneo',

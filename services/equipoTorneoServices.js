@@ -1,9 +1,14 @@
 const { EquipoTorneo, Equipo, Torneo } = require('../models');
 const equipoTorneoServices = {
     // Crear equipo en torneo
-    crearEquipoTorneo: async ({ id_equipo, id_torneo }) => {
-        const equipoTorneo = await EquipoTorneo.create({ id_equipo, id_torneo });
-        return equipoTorneo;
+    ingresarEquipoTorneoNombre: async ({ nombre, id_torneo }) => {
+        const equipo = await Equipo.findOne({ where: { nombre } });
+        if (!equipo) throw new Error('Equipo no encontrado');
+        const nuevoEquipo = await EquipoTorneo.create({
+            id_equipo: equipo.id,
+            id_torneo
+        });
+        return nuevoEquipo;
     },
 
     // Obtener todos los equipos en un torneo
