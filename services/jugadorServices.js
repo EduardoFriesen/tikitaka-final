@@ -1,22 +1,30 @@
-const { usuario, equipo } = require('../models');
+const { Usuario, Equipo, Jugador } = require('../models');
 const jugadorServices = {
     // Crear jugador
-    crearJugador: async ({ id_usuario, id_equipo, camiseta }) => {
-        const nuevoJugador = await usuario.create({ id_usuario, id_equipo, camiseta });
+    ficharJugadorPorUsername: async ({ username, id_equipo, camiseta }) => {
+        const user = await Usuario.findOne({ where: { username } });
+        if (!user) throw new Error('Usuario no encontrado');
+        const nuevoJugador = await Jugador.create({
+            id_usuario: user.id,
+            id_equipo,
+            camiseta
+        });
         return nuevoJugador;
     },
 
-    // Obtener todos los jugadores
-    obtenerJugadores: async () => {
-        return await usuario.findAll({
-            include: [{ model: equipo, as: 'equipo' }]
+    obtenerJugadoresPorEquipo: async (id_equipo) => {
+        return await Jugador.findAll({
+            where: { id_equipo },
+            include: [
+                { model: Usuario, as: 'Usuario' }
+            ]
         });
     },
 
     // Obtener jugador por ID
     obtenerJugadorPorId: async (id) => {
-        const jugador = await usuario.findByPk(id, {
-            include: [{ model: equipo, as: 'equipo' }]
+        const jugador = await Jugador.findByPk(id, {
+            include: [{ model: Equipo, as: 'Equipo' }]
         });
         if (!jugador) throw new Error('Jugador no encontrado');
         return jugador;
@@ -24,7 +32,7 @@ const jugadorServices = {
 
     // Actualizar jugador
     actualizarJugador: async (id, { id_equipo, camiseta }) => {
-        const jugador = await usuario.findByPk(id);
+        const jugador = await Jugador.findByPk(id);
         if (!jugador) throw new Error('Jugador no encontrado');
         jugador.id_equipo = id_equipo;
         jugador.camiseta = camiseta;
@@ -34,9 +42,10 @@ const jugadorServices = {
 
     // Eliminar jugador
     eliminarJugador: async (id) => {
-        const jugador = await usuario.findByPk(id);
+        const jugador = await Jugador.findByPk(id);
         if (!jugador) throw new Error('Jugador no encontrado');
         await jugador.destroy();
         return { message: 'Jugador eliminado' };
     }
 };
+module.exports = jugadorServices;

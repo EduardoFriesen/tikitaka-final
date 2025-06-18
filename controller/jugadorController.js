@@ -2,22 +2,23 @@ const jugadorServices = require('../services/jugadorServices');
 
 const jugadorController = {
     // Crear jugador
-    crearJugador: async (req, res) => {
+    ficharJugador: async (req, res) => {
         try {
-            const { id_usuario, id_equipo, camiseta } = req.body;
-            const jugador = await jugadorServices.crearJugador({ id_usuario, id_equipo, camiseta });
+            const id_equipo = req.params.id;
+            const { username, camiseta } = req.body;
+            const jugador = await jugadorServices.ficharJugadorPorUsername({ username, id_equipo, camiseta });
             res.send({ success: true, jugador });
         } catch (error) {
             res.send({ success: false, message: error.message });
         }
     },
 
-    // Obtener todos los jugadores
-    obtenerJugadores: async (req, res) => {
+    obtenerJugadoresPorEquipo: async (req, res) => {
         try {
-            const jugadores = await jugadorServices.obtenerJugadores();
+            const id_equipo = req.params.id;
+            const jugadores = await jugadorServices.obtenerJugadoresPorEquipo(id_equipo);
             res.send({ success: true, jugadores });
-        } catch (error) {
+         } catch (error) {
             res.send({ success: false, message: error.message });
         }
     },

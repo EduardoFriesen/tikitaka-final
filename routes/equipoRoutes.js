@@ -15,4 +15,6 @@ router.put('/actualizarEquipo/:id', verificarToken, verificarAdmin, equipoContro
 // Eliminar equipo
 router.delete('/eliminarEquipo/:id', verificarToken, verificarAdmin, equipoController.eliminarEquipo);
 
+
+
 module.exports = router;
