@@ -1,11 +1,15 @@
 const { Fecha, EquipoTorneo, Jugador, Equipo, Torneo } = require('../models');
 const partidoTorneoServices = {
     // Crear partido
-    crearPartido: async ({ id_fecha, id_equipo_local, id_equipo_visitante, goles_local, goles_visitante }) => {
+    crearPartido: async ({ id_fecha, equipo_local, equipo_visitante, goles_1, goles_2 }) => {
+        const equipo1 = await Equipo.findOne({ where: { equipo_local } });
+        if (!equipo1) throw new Error('Equipo 1 no encontrado');
+        const equipo2 = await Equipo.findOne({ where: { equipo_visitante } });
+        if (!equipo2) throw new Error('Equipo 2 no encontrado');
         const partido = await Fecha.create({
             id_fecha,
-            id_equipo_1,
-            id_equipo_2,
+            id_equipo_1 : equipo1.id,
+            id_equipo_2: equipo2.id,
             goles_1,
             goles_2
         });

@@ -13,4 +13,6 @@ router.get('/obtenerEquiposPorIdTorneo/:id', verificarToken, equipoTorneoControl
 router.put('/actualizarEquipoTorneo/:id', verificarToken, verificarAdmin, equipoTorneoController.actualizarEquipoTorneo);
 // Eliminar equipo de torneo
 router.delete('/eliminarEquipoTorneo/:id', verificarToken, verificarAdmin, equipoTorneoController.eliminarEquipoTorneo);
+//cantidad de equipos en torneo
+router.get('/cantidadEquiposTorneo/:id', verificarToken, equipoTorneoController.obtenerCantidadEquiposTorneo);
 module.exports = router;

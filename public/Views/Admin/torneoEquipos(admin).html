@@ -29,11 +29,9 @@
         <img src="/img/logo.png" alt="" style="height: 70px;"> TikiTaka
       </a>
     </div>
-    <div id="torneo" class="col d-flex align-items-center" style="color: white; font-size: 40px;"></div>
-    <div id="idTorneo" class="col d-flex align-items-center" style="color: white; font-size: 20px;"></div>
-    <div id="fechaInicio" class="col d-flex align-items-center" style="color: white; font-size: 20px;"></div>
-    <div id="fechaFin" class="col d-flex align-items-center" style="color: white; font-size: 20px;"></div>
-    
+    <div class="col d-flex align-items-center" style="color: white; font-size: 40px;">
+      Equipos
+    </div>
   </div>
 </div>
 
@@ -67,14 +65,55 @@
   </div>
 </div>
 
+
+<div class="container d-flex justify-content-center">
+    <div class="d-flex flex-wrap justify-content-center" id="equiposList"></div>
+</div>    
 <div id="message" style="display:none;"></div>   
 
 <!-- Ubiquen bien este boton -->
-
-<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalEquipo" onclick="'torneoFechas.html'">
-  Fechas
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalEquipo">
+  Ingresar Equipo
 </button>
 
+<div class="modal fade" id="modalEquipo" tabindex="-1" aria-labelledby="modalFicharLabel" aria-hidden="true" style = "position: fixed;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Ingresar Equipos</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <form id = "ficharEquipo">
+      <div class="modal-body">
+        <input id="nombre" class="form-control mb-2" name = "nombre" placeholder="Equipo" required />
+      </div>
+      <div class="modal-footer">  
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button id="btnFicharEquipo" type="submit" class="btn btn-success">Ingresar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="eliminarModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="eliminarModalLabel">Eliminar Equipo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="delId" name="delId"/>
+        ¿Estás seguro que deseas eliminar el equipo <strong id="delName"></strong>?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" onclick="eliminarEquipo()">Eliminar</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -83,8 +122,12 @@
 <script src="/Js/sesion.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-    cargar();
+  cargarEquipos();
+  document.getElementById('ficharEquipo').addEventListener('submit', function(event) {
+    event.preventDefault();
+    ingresarEquipo();
   });
+});
 </script>
 </body>
 </html>

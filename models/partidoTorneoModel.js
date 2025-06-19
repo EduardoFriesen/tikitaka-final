@@ -14,6 +14,10 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true
         },
+        id_torneo: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
         id_equipo_1: {
             type: DataTypes.INTEGER,
             allowNull: false

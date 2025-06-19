@@ -4,8 +4,8 @@ const partidoTorneoController = {
     // Crear partido
     crearPartido: async (req, res) => {
         try {
-            const { id_fecha, id_equipo_local, id_equipo_visitante, goles_local, goles_visitante } = req.body;
-            const partido = await partidoTorneoServices.crearPartido({ id_fecha, id_equipo_local, id_equipo_visitante, goles_local, goles_visitante });
+            const { id_fecha, equipo_local, equipo_visitante} = req.body;
+            const partido = await partidoTorneoServices.crearPartido({ id_fecha, equipo_local, equipo_visitante});
             res.send({ success: true, partido });
         } catch (error) {
             res.send({ success: false, message: error.message });

@@ -48,6 +48,13 @@ const equipoTorneoServices = {
         if (!equipoTorneo) throw new Error('Equipo en torneo no encontrado');
         await equipoTorneo.destroy();
         return { message: 'Equipo eliminado del torneo' };
+    },
+    // Obtener cantidad de equipos en torneo
+    obtenerCantidadEquipos: async (id_torneo) => {
+        console.log('ID del torneo:', id_torneo); // Para depuración
+        const cantidad = await EquipoTorneo.count({ where: { id_torneo } });
+        console.log('Cantidad de equipos en torneo service:', cantidad); // Para depuración
+        return cantidad;
     }
 };
 module.exports = equipoTorneoServices;

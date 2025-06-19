@@ -55,6 +55,16 @@ const equipoTorneoController = {
         } catch (error) {
             res.send({ success: false, message: error.message });
         }
+    },
+    // Obtener cantidad de equipos en torneo
+    obtenerCantidadEquiposTorneo: async (req, res) => {
+        try {
+            const id_torneo = req.params.id;
+            const cantidad = await equipoTorneoServices.obtenerCantidadEquipos(id_torneo);
+            res.send({ success: true, cantidad });
+        } catch (error) {
+            res.send({ success: false, message: error.message });
+        }
     }
 };
 module.exports = equipoTorneoController;
