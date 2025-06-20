@@ -67,14 +67,182 @@
   </div>
 </div>
 
+<button type="button" class="btn btn-success" onclick="window.location.href='torneoEquipos(admin).html'" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+  Ingresar Equipos
+</button>
+ <div class="container-fluid" style="padding-left: 100px; padding-right: 100px;">
+  <div class="row d-flex justify-content-center align-items-center m-3" style="font-size: 30px;">Cuartos de Final</div>
+    <br>
+    <div class="row ">
+      <div class="col-3 d-flex justify-content-center align-items-center" >
+        <div class="card" style="width: 18rem;">
+          <img src="/img/Cómo-hacer-una-cancha-de-fútbol.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <input type="hidden" id="id_partido_1">
+            <h5 class="card-title">Primera de Cuartos</h5>
+            <p id = "e11" class="card-text">Equipo 1</p>
+            <p id = "e12" class="card-text">Equipo 2</p>
+            <p id = "fecha1" class="card-text"></p>
+            <p id = "g11" class="card-text">N/A</p>
+            <p id = "g12" class="card-text">N/A</p>
+            <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#configurarModal" onclick="cargarFecha(1)">Configurar</button>
+            <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#finalizarModal" onclick="cargarFecha(1, document.getElementById('id_patido_1').value)">Finalizar</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-3 d-flex justify-content-center align-items-center" >
+        <div class="card" style="width: 18rem;">
+          <img src="/img/Cómo-hacer-una-cancha-de-fútbol.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <input type="hidden" id="id_partido_2">
+            <h5 class="card-title">Segunda de Cuartos</h5>
+            <p id = "e21" class="card-text">Equipo 1</p>
+            <p id = "e22" class="card-text">Equipo 2</p>
+            <p id = "fecha2" class="card-text"></p>
+            <p id = "g21" class="card-text">0</p>
+            <p id = "g22" class="card-text">0</p>
+            <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#configurarModal" onclick="cargarFecha(2)">Configurar</button>
+            <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#finalizarModal" onclick="cargarFecha(2, document.getElementById('id_patido_2').value)">Finalizar</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-3 d-flex justify-content-center align-items-center" >
+        <div class="card" style="width: 18rem;">
+          <img src="/img/Cómo-hacer-una-cancha-de-fútbol.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <input type="hidden" id="id_partido_3">
+            <h5 class="card-title">Tercera de Cuartos</h5>
+            <p id = "e31" class="card-text">Equipo 1</p>
+            <p id = "e32" class="card-text">Equipo 2</p>
+            <p id = "fecha3" class="card-text"></p>
+            <p id = "g31" class="card-text">0</p>
+            <p id = "g32" class="card-text">0</p>
+            <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#configurarModal" onclick="cargarFecha(3)">Configurar</button>
+            <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#finalizarModal" onclick="cargarFecha(3, document.getElementById('id_patido3').value)">Finalizar</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-3 d-flex justify-content-center align-items-center" >
+        <div class="card" style="width: 18rem;">
+          <img src="/img/Cómo-hacer-una-cancha-de-fútbol.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <input type="hidden" id="id_partido_4">
+            <h5 class="card-title">Cuarto de Cuartos</h5>
+            <p id = "e41" class="card-text">Equipo 1</p>
+            <p id = "e42" class="card-text">Equipo 2</p>
+            <p id = "fecha4" class="card-text"></p>
+            <p id = "g41" class="card-text">0</p>
+            <p id = "g42" class="card-text">0</p>
+            <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#configurarModal" onclick="cargarFecha(4)">Configurar</button>
+            <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#finalizarModal" onclick="cargarFecha(4, document.getElementById('id_patido_4').value)">Finalizar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row d-flex justify-content-center align-items-center m-3" style="font-size: 30px;">Semifinales</div>
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-3 d-flex justify-content-center align-items-center" >
+          <div class="card" style="width: 18rem;">
+            <img src="/img/Cómo-hacer-una-cancha-de-fútbol.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <input type="hidden" id="id_partido_5">
+              <h5 class="card-title">Primera Semifinal</h5>
+              <p id = "e51" class="card-text">Equipo 1</p>
+              <p id = "e52" class="card-text">Equipo 2</p>
+              <p id = "fecha5" class="card-text"></p>
+              <p id = "g51" class="card-text">0</p>
+              <p id = "g52" class="card-text">0</p>
+              <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#configurarModal" onclick="cargarFecha(5)">Configurar</button>
+              <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#finalizarModal" onclick="cargarFecha(5, document.getElementById('id_patido_5').value)">Finalizar</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-3 d-flex justify-content-center align-items-center" >
+          <div class="card" style="width: 18rem;">
+            <img src="/img/Cómo-hacer-una-cancha-de-fútbol.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <input type="hidden" id="id_partido_6">
+              <h5 class="card-title">Segunda de Semifinal</h5>
+              <p id = "e61" class="card-text">Equipo 1</p>
+              <p id = "e62" class="card-text">Equipo 2</p>
+              <p id = "fecha6" class="card-text"></p>
+              <p id = "g61" class="card-text">0</p>
+              <p id = "g62" class="card-text">0</p>
+              <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#configurarModal" onclick="cargarFecha(6)">Configurar</button>
+              <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#finalizarModal" onclick="cargarFecha(6,document.getElementById('id_patido_6').value)">Finalizar</button>
+            </div>
+          </div>
+        </div>   
+      </div>
+      <div class="row d-flex justify-content-center align-items-center  m-3" style="font-size: 30px;">Final</div>
+      <br>
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-3 d-flex justify-content-center align-items-center" >
+          <div class="card" style="width: 18rem;">
+            <img src="/img/Cómo-hacer-una-cancha-de-fútbol.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <input type="hidden" id="id_partido_7">
+              <h5 class="card-title">Final</h5>
+              <p id = "e71" class="card-text">Equipo 1</p>
+              <p id = "e72" class="card-text">Equipo 2</p>
+              <p id = "fecha7" class="card-text"></p>
+              <p id = "g71" class="card-text">0</p>
+              <p id = "g72" class="card-text">0</p>
+              <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#configurarModal" onclick="cargarFecha(7)">Configurar</button>
+              <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#finalizarModal" onclick="cargarFecha(7, document.getElementById('id_patido_7').value)">Finalizar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
 <div id="message" style="display:none;"></div>   
 
-<!-- Ubiquen bien este boton -->
+<div class="modal fade" id="configurarModal" tabindex="-1" aria-labelledby="crearModalLabel" aria-hidden="true" style = "position: fixed;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Crear Nuevo Partido</h1>
+        <input type="hidden" id="idFecha">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <form id = "configurarPartido">
+      <div class="modal-body">
+        <input id="equipo1" class="form-control mb-2" name = "equipo1" placeholder="Equipo" required />
+        <input id="equipo2" class="form-control mb-2" name = "equipo2" placeholder="Equipo" required />
+        <input id="fecha" type="date" class="form-control mb-2" name = "fecha" required />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button id="btnCrearPartido" type="submit" class="btn btn-success">Configurar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
 
-<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalEquipo" onclick="'torneoFechas.html'">
-  Fechas
-</button>
-
+<div class="modal fade" id="finalizarModal" tabindex="-1" aria-labelledby="crearModalLabel" aria-hidden="true" style = "position: fixed;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Finalizar Partido</h1>
+        <input type="hidden" id="instancia">
+        <input type="hidden" id = "idPartidoFinalizado">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <form id = "finalizarPartido">
+      <div class="modal-body">
+        <input id="resultado1" class="form-control mb-2" name = "resultado1" placeholder="Resultado Equipo 1" required />
+        <input id="resultado2" class="form-control mb-2" name = "resultado2" placeholder="Resultado Equipo 2" required />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button id="btnCrearPartido" type="submit" class="btn btn-success">Finalizar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -82,8 +250,23 @@
 <script src="/Js/desplegables.js"></script>
 <script src="/Js/sesion.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', function () {
     cargar();
+    cargarPartidos();
+  });
+  function cargarFecha(idFecha, idPartidoFinalizado) {
+    document.getElementById('idFecha').value = idFecha;
+    document.getElementById('instancia'). value = idFecha;
+    document.getElementById('idPartidoFinalizado'). value = idPartidoFinalizado;
+
+  }
+  document.getElementById('configurarPartido').addEventListener('submit', function(event) {
+      event.preventDefault();
+      configurarPartido();
+  });
+  document.getElementById('finalizarPartido').addEventListener('submit', function(event) {
+      event.preventDefault();
+      finalizarPartido();
   });
 </script>
 </body>

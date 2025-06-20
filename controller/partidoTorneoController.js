@@ -4,8 +4,8 @@ const partidoTorneoController = {
     // Crear partido
     crearPartido: async (req, res) => {
         try {
-            const { id_fecha, equipo_local, equipo_visitante} = req.body;
-            const partido = await partidoTorneoServices.crearPartido({ id_fecha, equipo_local, equipo_visitante});
+            const { id_torneo ,fecha, equipo_local, equipo_visitante, nroFecha} = req.body;
+            const partido = await partidoTorneoServices.crearPartido({ id_torneo, fecha, equipo_local, equipo_visitante, nroFecha});
             res.send({ success: true, partido });
         } catch (error) {
             res.send({ success: false, message: error.message });
@@ -13,10 +13,10 @@ const partidoTorneoController = {
     },
 
     // Obtener partidos por fecha
-    obtenerPartidosPorFecha: async (req, res) => {
+    obtenerPartidos: async (req, res) => {
         try {
-            const id_fecha = req.params.id_fecha;
-            const partidos = await partidoTorneoServices.obtenerPartidosPorFecha(id_fecha);
+            const id_torneo = req.params.id_torneo;
+            const partidos = await partidoTorneoServices.obtenerPartidos(id_torneo);
             res.send({ success: true, partidos });
         } catch (error) {
             res.send({ success: false, message: error.message });
@@ -38,8 +38,18 @@ const partidoTorneoController = {
     actualizarPartido: async (req, res) => {
         try {
             const id = req.params.id;
-            const { goles_local, goles_visitante } = req.body;
-            const partido = await partidoTorneoServices.actualizarPartido(id, { goles_local, goles_visitante });
+            const { goles_1, goles_2 } = req.body;
+            console.log(goles_1, goles_2, id);
+            const partido = await partidoTorneoServices.actualizarPartido(id, { goles_1, goles_2});
+            res.send({ success: true, partido });
+        } catch (error) {
+            res.send({ success: false, message: error.message });
+        }
+    },
+    clasificado: async (req, res) => {
+        try {
+            const { id_torneo, id_equipo_1, id_equipo_2, nroFecha: nroFecha} = req.body;
+            const partido = await partidoTorneoServices.clasificado({id_torneo, id_equipo_1, id_equipo_2, nroFecha: nroFecha});
             res.send({ success: true, partido });
         } catch (error) {
             res.send({ success: false, message: error.message });

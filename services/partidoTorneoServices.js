@@ -1,31 +1,93 @@
-const { Fecha, EquipoTorneo, Jugador, Equipo, Torneo } = require('../models');
+const { EquipoTorneo, Jugador, Equipo, Torneo, partidoTorneo } = require('../models');
 const partidoTorneoServices = {
     // Crear partido
-    crearPartido: async ({ id_fecha, equipo_local, equipo_visitante, goles_1, goles_2 }) => {
-        const equipo1 = await Equipo.findOne({ where: { equipo_local } });
-        if (!equipo1) throw new Error('Equipo 1 no encontrado');
-        const equipo2 = await Equipo.findOne({ where: { equipo_visitante } });
-        if (!equipo2) throw new Error('Equipo 2 no encontrado');
-        const partido = await Fecha.create({
-            id_fecha,
-            id_equipo_1 : equipo1.id,
-            id_equipo_2: equipo2.id,
-            goles_1,
-            goles_2
-        });
-        return partido;
+    crearPartido: async ({ id_torneo ,fecha, equipo_local, equipo_visitante, nroFecha}) => {
+        if(equipo_local && !equipo_visitante){
+            const equipo1 = await Equipo.findOne({ where: { nombre : equipo_local } });
+            if (!equipo1) throw new Error('Equipo 1 no encontrado');
+            const equipoTorneo1 = await EquipoTorneo.findOne({where: {id_equipo: equipo1.id, id_torneo: id_torneo}})
+            if (!equipoTorneo1) throw new Error('Equipo 1 no se encuentra en el torneo');
+            const partido = await partidoTorneo.create({
+                id_torneo,
+                fecha,
+                id_equipo_1 : equipoTorneo1.id,
+                nroFecha
+            });
+            return partido;
+        }else if(!equipo_local && equipo_visitante){
+            const equipo2 = await Equipo.findOne({ where: { nombre : equipo_visitante } });
+            if (!equipo2) throw new Error('Equipo 2 no encontrado');
+            const equipoTorneo2 = await EquipoTorneo.findOne({where: {id_equipo: equipo2.id, id_torneo: id_torneo}})
+            if (!equipoTorneo2) throw new Error('Equipo 2 no se encuentra en el torneo');
+            const partido = await partidoTorneo.create({
+                id_torneo,
+                fecha,
+                id_equipo_2 : equipoTorneo2.id,
+                nroFecha
+            });
+            return partido;
+        } else {
+            const equipo1 = await Equipo.findOne({ where: { nombre : equipo_local } });
+            if (!equipo1) throw new Error('Equipo 1 no encontrado');
+            const equipoTorneo1 = await EquipoTorneo.findOne({where: {id_equipo: equipo1.id, id_torneo: id_torneo}})
+            if (!equipoTorneo1) throw new Error('Equipo 1 no se encuentra en el torneo');
+            const equipo2 = await Equipo.findOne({ where: { nombre : equipo_visitante } });
+            if (!equipo2) throw new Error('Equipo 2 no encontrado');
+            const equipoTorneo2 = await EquipoTorneo.findOne({where: {id_equipo: equipo2.id, id_torneo: id_torneo}})
+            if (!equipoTorneo2) throw new Error('Equipo 2 no se encuentra en el torneo');
+            const partido = await partidoTorneo.create({
+                id_torneo,
+                fecha,
+                id_equipo_1 : equipoTorneo1.id,
+                id_equipo_2 : equipoTorneo2.id,
+                nroFecha,
+            });
+            return partido ;
+        }
     },
 
-    // Obtener partidos por fecha
-    obtenerPartidosPorFecha: async (id_fecha) => {
-        return await Fecha.findAll({
-            where: { id_fecha },
-            include: [
-                { model: EquipoTorneo, as: 'Equipo_1' },
-                { model: EquipoTorneo, as: 'Equipo_2' }
-            ]
+    clasificado: async({id_torneo, id_equipo_1, id_equipo_2, nroFecha}) => {
+    try {
+        const partido = await partidoTorneo.findOne({
+            where: {
+            id_torneo,
+            nroFecha
+        }
         });
-    },
+        if (partido) {
+            // Si ya existe → actualizar
+            await partido.update({
+                id_equipo_1,
+                id_equipo_2
+            });
+        return partido;
+        } else {
+        // Si no existe → crear
+            const partido = await partidoTorneo.create({
+            id_torneo,
+            nroFecha,
+            id_equipo_1,
+            id_equipo_2,
+          });
+          return partido;
+        }
+    } catch (error) {
+        console.error('Error en upsert de partido:', error);
+        throw error;
+    }
+},
+
+    // Obtener partidos por fecha
+   obtenerPartidos: async (id_torneo) => {
+    return await partidoTorneo.findAll({
+        where: { id_torneo },
+        include: [
+            { model: Torneo, as: 'Torneo' },
+            { model: EquipoTorneo, as: 'Equipo_1' },
+            { model: EquipoTorneo, as: 'Equipo_2' },
+        ]
+    });
+},
     obtenerPartidosPorEquipo: async (id_equipo) => {
         return await partido.findAll({
             where: {
@@ -41,8 +103,9 @@ const partidoTorneoServices = {
         });
     },
     // Actualizar partido
-    actualizarPartido: async (id, { goles_1, goles_2 }) => {
-        const partido = await Fecha.findByPk(id);
+    actualizarPartido: async (id, { goles_1, goles_2}) => {
+        console.log(goles_1, goles_2, id);
+        const partido = await partidoTorneo.findByPk(id);
         if (!partido) throw new Error('Partido no encontrado');
         partido.goles_1 = goles_1;
         partido.goles_2 = goles_2;
@@ -72,13 +135,6 @@ const partidoTorneoServices = {
             include: [
                 { model: EquipoTorneo, as: 'Equipo_1' },
                 { model: EquipoTorneo, as: 'Equipo_2' },
-                { 
-                    model: Fecha, 
-                    as: 'Fecha',
-                    include: [
-                        { model: Torneo, as: 'Torneo' }
-                    ]
-                }
             ]
         });
     }

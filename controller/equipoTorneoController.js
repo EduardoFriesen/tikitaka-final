@@ -3,7 +3,7 @@ const equipoTorneoController = {
     // Crear equipo en torneo
     ingresarEquipoTorneo: async (req, res) => {
     try {
-        const { nombre } = req.body; // ✅ Desestructuración correcta
+        const { nombre } = req.body;
         const id_torneo = req.params.id;
         const equipo = await equipoTorneoServices.ingresarEquipoTorneoNombre({ nombre, id_torneo });
         res.send({ success: true, equipo });
@@ -11,6 +11,15 @@ const equipoTorneoController = {
         res.send({ success: false, message: error.message });
     }
 },
+    obtenerEquipo: async (req, res) => {
+        try{
+            const id_equipo = req.params.id;
+            const equipo = await equipoTorneoServices.obtenerEquipo({id_equipo});
+            res.send({ success: true, equipo });
+        }catch{
+            res.send({ success: false, message: error.message });  
+        }
+    },
 
     // Obtener todos los equipos en un torneo
     obtenerEquiposTorneo: async (req, res) => {

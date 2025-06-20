@@ -22,6 +22,12 @@ const equipoTorneoServices = {
         });
     },
 
+    obtenerEquipo: async (id_equipo) => {
+        return await EquipoTorneo.findOne({where : {id_equipo},
+        include: [
+            {model: Equipo, as: 'Equipo'}
+        ]});
+    },
     // Obtener equipos por ID de torneo
     obtenerEquiposPorIdTorneo: async (id_torneo) => {
         const equipos = await EquipoTorneo.findAll({

@@ -371,45 +371,26 @@ async function jugadores(idEquipo) {
     window.location.href = '/Views/Admin/plantel(admin).html';
 }
 
-async function crearPartido() {
+async function configurarPartido() {
     const idTorneo = localStorage.getItem('idTorneo');
-    const idEquipo1 = document.getElementById('equipo1').value;
-    const idEquipo2 = document.getElementById('equipo2').value;
-    const fecha = document.getElementById('fechaPartido').value;
-    if (!idEquipo1 || !idEquipo2 || !fecha) {
+    const equipo1 = document.getElementById('equipo1').value;
+    const equipo2 = document.getElementById('equipo2').value;
+    const fecha = document.getElementById('fecha').value;
+    const nroFecha = document.getElementById('idFecha').value;
+    if (!equipo1 || !equipo2 || !fecha) {
         alert('Por favor, completa todos los campos.');
         return;
     }
 
     try{
         const token = localStorage.getItem('token');
-        const res = await fetch(`/api/fechasTorneo/crearFecha/${idTorneo}`, {
+        const response = await fetch('/api/partidosTorneo/crearPartido', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ fecha })
-        });
-        if (res.status === 401 || res.status === 403) {
-            window.location.href = '/Views/Login/login.html';
-            return;
-        }
-        const data = await res.json();
-        if (!data.success) {
-            alert('Error al crear la fecha: ' + data.message);
-            return;
-        }
-        const idFecha = data.fecha.id; 
-        try {
-        const token = localStorage.getItem('token');
-        const response = await fetch('/api/partidos/crearPartido', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ id_torneo: idTorneo, id_equipo1: idEquipo1, id_equipo2: idEquipo2, id_fecha: idFecha })
+            body: JSON.stringify({ id_torneo: idTorneo, fecha, equipo_local: equipo1, equipo_visitante: equipo2, nroFecha})
         });
 
         const data = await response.json();
@@ -419,15 +400,130 @@ async function crearPartido() {
         } else {
             alert(`Error al crear partido: ${data.message}`);
         }
-    } catch (error) {
+    }catch (error) {
         console.error('Error al crear partido:', error);
         alert('Ocurrió un error al crear el partido. Inténtalo de nuevo más tarde.');
     }
+}
+
+async function cargarPartidos() {
+    const id_torneo = localStorage.getItem('idTorneo');
+    if (!idTorneo) {
+        alert('No se ha seleccionado un torneo. Por favor, selecciona un torneo primero.');
+        return;
+    }
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = '/Views/Login/login.html';
+        return;
+    }
+
+    try {
+        const res = await fetch(`/api/partidosTorneo/obtenerPartidos/${id_torneo}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        const data = await res.json();
+        if (!data.success || !Array.isArray(data.partidos)) {
+            console.error('Error en la respuesta del servidor:', data);
+            alert('No se pudieron cargar los partidos.');
+            return;
+        }
+
+        for (const partido of data.partidos) {
+            console.log(partido.goles_1, partido.goles_2, partido.id);
+            const token = localStorage.getItem('token');
+            const equipo_1 = await fetch(`/api/equipos/obtenerEquipo/${partido.Equipo_1.id_equipo}`, {
+                method: 'get',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            const name_1 = await equipo_1.json();
+            const equipo_2 = await fetch(`/api/equipos/obtenerEquipo/${partido.Equipo_2.id_equipo}`,{
+                method: 'get',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            const name_2 = await equipo_2.json();
+            document.getElementById('id_partido_' + partido.nroFecha).innerHTML = partido.id;
+            document.getElementById('e' + partido.nroFecha + '1').innerHTML = name_1.equipo.nombre;
+            document.getElementById('e' + partido.nroFecha + '2').innerHTML = name_2.equipo.nombre;
+            document.getElementById('fecha' + partido.nroFecha).innerHTML = formatearFecha(partido.fecha);
+            document.getElementById('g' + partido.nroFecha + '1').innerHTML = partido.goles_1;
+            document.getElementById('g' + partido.nroFecha + '2').innerHTML = partido.goles_2;
+        }
     }catch (error) {
-        console.error('Error al crear la fecha:', error);
-        alert('Ocurrió un error al crear la fecha. Inténtalo de nuevo más tarde.');
+        console.error('Error al cargar los partidos:', error);
+    }     
+}
+
+async function finalizarPartido(){
+    const resultado1 = document.getElementById('resultado1').value;
+    const resultado2 = document.getElementById('resultado2').value;
+    const nroFecha = document.getElementById('instancia').value;
+    const id_partido = document.getElementById('idPartidoFinalizado').value;
+    const idTorneo = localStorage.getItem('idTorneo');
+
+    console.log(resultado1,resultado2);
+
+    const token = localStorage.getItem('token');
+
+    const res = await fetch (`/api/partidosTorneo/actualizarPartido/${id_partido}`,{
+        method: 'PUT',
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({goles_1: resultado1, goles_2: resultado2})
+    });
+    const data = await res.json();
+    if (data.success) {
+        const nroFecha = posicion(data.partido.nroFecha);
+        if(data.partido.goles_1 > data.partido.goles_2){
+            const token = localStorage.getItem('token');
+            const response = await fetch('/api/partidosTorneo/clasificado', {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id_torneo: data.partido.id_torneo, id_equipo_1:  data.partido.id_equipo_1 , nroFecha: nroFecha})
+            });
+
+        } else{
+            const token = localStorage.getItem('token');
+            const response = await fetch('/api/partidosTorneo/clasificado', {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id_torneo: data.partido.id_torneo, id_equipo_1:  data.partido.id_equipo_2, nroFecha: nroFecha})
+            });
+        }
     }
 }
+
+function posicion(nroFecha) {
+    if(nroFecha == 7){
+            nroPosicion = nroFecha;
+        }else if(nroFecha == 6){
+            nroPosicion = nroFecha + 1;
+        }else if(nroFecha == 5 ||nroFecha == 4){
+            nroPosicion = nroFecha + 2;
+        }else if(nroFecha == 3 || nroFecha == 2){
+            nroPosicion = nroFecha + 3;
+        }else{
+            nroPosicion = nroFecha + 4;
+    }
+    return nroPosicion;
+}
+
+
+
 
 
 
