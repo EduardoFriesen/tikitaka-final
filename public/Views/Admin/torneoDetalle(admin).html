@@ -86,7 +86,7 @@
             <p id = "g11" class="card-text">N/A</p>
             <p id = "g12" class="card-text">N/A</p>
             <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#configurarModal" onclick="cargarFecha(1)">Configurar</button>
-            <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#finalizarModal" onclick="cargarFecha(1, document.getElementById('id_patido_1').value)">Finalizar</button>
+            <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#finalizarModal" onclick="cargarFecha(1)">Finalizar</button>
           </div>
         </div>
       </div>
@@ -102,7 +102,7 @@
             <p id = "g21" class="card-text">0</p>
             <p id = "g22" class="card-text">0</p>
             <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#configurarModal" onclick="cargarFecha(2)">Configurar</button>
-            <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#finalizarModal" onclick="cargarFecha(2, document.getElementById('id_patido_2').value)">Finalizar</button>
+            <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#finalizarModal" onclick="cargarFecha(2)">Finalizar</button>
           </div>
         </div>
       </div>
@@ -118,7 +118,7 @@
             <p id = "g31" class="card-text">0</p>
             <p id = "g32" class="card-text">0</p>
             <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#configurarModal" onclick="cargarFecha(3)">Configurar</button>
-            <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#finalizarModal" onclick="cargarFecha(3, document.getElementById('id_patido3').value)">Finalizar</button>
+            <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#finalizarModal" onclick="cargarFecha(3)">Finalizar</button>
           </div>
         </div>
       </div>
@@ -134,7 +134,7 @@
             <p id = "g41" class="card-text">0</p>
             <p id = "g42" class="card-text">0</p>
             <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#configurarModal" onclick="cargarFecha(4)">Configurar</button>
-            <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#finalizarModal" onclick="cargarFecha(4, document.getElementById('id_patido_4').value)">Finalizar</button>
+            <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#finalizarModal" onclick="cargarFecha(4)">Finalizar</button>
           </div>
         </div>
       </div>
@@ -152,8 +152,8 @@
               <p id = "fecha5" class="card-text"></p>
               <p id = "g51" class="card-text">0</p>
               <p id = "g52" class="card-text">0</p>
-              <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#configurarModal" onclick="cargarFecha(5)">Configurar</button>
-              <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#finalizarModal" onclick="cargarFecha(5, document.getElementById('id_patido_5').value)">Finalizar</button>
+              <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#fechaModal" onclick="cargarFecha(5)">Configurar</button>
+              <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#finalizarModal" onclick="cargarFecha(5)">Finalizar</button>
             </div>
           </div>
         </div>
@@ -168,8 +168,8 @@
               <p id = "fecha6" class="card-text"></p>
               <p id = "g61" class="card-text">0</p>
               <p id = "g62" class="card-text">0</p>
-              <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#configurarModal" onclick="cargarFecha(6)">Configurar</button>
-              <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#finalizarModal" onclick="cargarFecha(6,document.getElementById('id_patido_6').value)">Finalizar</button>
+              <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#fechaModal" onclick="cargarFecha(6)">Configurar</button>
+              <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#finalizarModal" onclick="cargarFecha(6)">Finalizar</button>
             </div>
           </div>
         </div>   
@@ -188,8 +188,8 @@
               <p id = "fecha7" class="card-text"></p>
               <p id = "g71" class="card-text">0</p>
               <p id = "g72" class="card-text">0</p>
-              <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#configurarModal" onclick="cargarFecha(7)">Configurar</button>
-              <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#finalizarModal" onclick="cargarFecha(7, document.getElementById('id_patido_7').value)">Finalizar</button>
+              <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#fechaModal" onclick="cargarFecha(7)">Configurar</button>
+              <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#finalizarModal" onclick="cargarFecha(7)">Finalizar</button>
             </div>
           </div>
         </div>
@@ -234,10 +234,32 @@
       <div class="modal-body">
         <input id="resultado1" class="form-control mb-2" name = "resultado1" placeholder="Resultado Equipo 1" required />
         <input id="resultado2" class="form-control mb-2" name = "resultado2" placeholder="Resultado Equipo 2" required />
+        <input id="nroFecha" type ="hidden" class="form-control mb-2" name = "nroFecha" placeholder="Resultado Equipo 2" required />
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
         <button id="btnCrearPartido" type="submit" class="btn btn-success">Finalizar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="fechaModal" tabindex="-1" aria-labelledby="fechaModalLabel" aria-hidden="true" style = "position: fixed;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Ingresar Fecha</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <form id = "fechaForm">
+      <div class="modal-body">
+        <input id="fechaNueva" type="date" class="form-control mb-2" name = "fechaNueva" required />
+        <input id="nroFecha2" type ="hidden" class="form-control mb-2" name = "nroFecha2" required />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button id="btnClasificatoria" type="submit" class="btn btn-success">Configurar</button>
       </div>
       </form>
     </div>
@@ -254,11 +276,10 @@
     cargar();
     cargarPartidos();
   });
-  function cargarFecha(idFecha, idPartidoFinalizado) {
+  function cargarFecha(idFecha) {
     document.getElementById('idFecha').value = idFecha;
-    document.getElementById('instancia'). value = idFecha;
-    document.getElementById('idPartidoFinalizado'). value = idPartidoFinalizado;
-
+    document.getElementById('nroFecha').value = idFecha;
+    document.getElementById('nroFecha2').value = idFecha;
   }
   document.getElementById('configurarPartido').addEventListener('submit', function(event) {
       event.preventDefault();
@@ -267,6 +288,10 @@
   document.getElementById('finalizarPartido').addEventListener('submit', function(event) {
       event.preventDefault();
       finalizarPartido();
+  });
+  document.getElementById('fechaForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      cargarClasificatoria();
   });
 </script>
 </body>

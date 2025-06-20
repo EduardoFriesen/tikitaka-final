@@ -96,6 +96,25 @@ const usuarioController = {
     }
   },
 
+  obtenerTorneosDeUsuario: async (req, res) => {
+    try {
+      const id_usuario = req.params.id;
+      const torneos = await usuarioServices.obtenerTorneosDeUsuario(id_usuario);
+      res.send({success: true, torneos});
+    } catch (error) {
+      res.send({ success: false, message: error.message });
+    }
+  },
+  obtenerIdTorneo: async (req, res) => {
+    try {
+      const id_usuario = req.params.id;
+      const torneo = await usuarioServices.obtenerTorneosDeUsuario(id_usuario);
+      res.send({success: true, torneo});
+    } catch (error) {
+      res.send({ success: false, message: error.message });
+    }
+  },
+
   // Logout (opcional, solo para frontend)
   logout: (req, res) => {
     res.send({ success: true, message: 'Logout exitoso' });

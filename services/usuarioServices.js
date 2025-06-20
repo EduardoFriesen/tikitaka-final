@@ -1,4 +1,4 @@
-const { Usuario } = require('../models');
+const { Usuario, Jugador, Equipo, EquipoTorneo, Torneo } = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = 'secretKey';
@@ -90,7 +90,103 @@ const usuarioServices = {
   countUsers: async () => {
     cantidad = await Usuario.count({ where: { admin: { [Op.not]: true } } });
     return cantidad;
+  },
+
+  obtenerTorneosDeUsuario : async (id_usuario) => {
+  const usuario = await Usuario.findByPk(id_usuario, {
+    include: {
+      model: Jugador,
+      as: 'Jugadores',
+      include: {
+        model: Equipo,
+        as: 'Equipo',
+        include: {
+          model: EquipoTorneo,
+          as: 'EquipoTorneos',
+          include: {
+            model: Torneo,
+            as: 'Torneo'
+          }
+        }
+      }
+    }
+  });
+
+  if (!usuario) throw new Error('Usuario no encontrado');
+
+  const torneos = [];
+
+  for (const jugador of usuario.Jugadores) {
+    const equipo = jugador.Equipo;
+    if (!equipo?.EquipoTorneos) continue;
+
+    for (const equipoTorneo of equipo.EquipoTorneos) {
+      const torneo = equipoTorneo.Torneo;
+      if (!torneo) continue;
+
+      // Buscamos el campeón del torneo (otro equipo)
+      const equipoCampeon = await EquipoTorneo.findOne({
+        where: {
+          id_torneo: torneo.id,
+          campeon: true
+        },
+        include: {
+          model: Equipo,
+          as: 'Equipo',
+          attributes: ['nombre']
+        }
+      });
+
+      const nombreCampeon = equipoCampeon?.Equipo?.nombre || null;
+
+      // Evitar duplicados
+      if (!torneos.find(t => t.id === torneo.id)) {
+        torneos.push({
+          id: torneo.id,
+          nombre: torneo.nombre,
+          fecha_inicio: torneo.fecha_inicio,
+          fecha_fin: torneo.fecha_fin,
+          campeon: nombreCampeon
+        });
+      }
+    }
   }
+
+  return torneos;
+},
+
+    obtenerIdTorneo: async (id_usuario) => {
+    const jugadores = await Jugador.findAll({
+        where: { id_usuario },
+        include: {
+            model: Equipo,
+            as: 'Equipo',
+            include: {
+                model: EquipoTorneo,
+                as: 'EquiposTorneos',
+                include: {
+                    model: Torneo,
+                    as: 'Torneo',
+                    where: { finalizado: false },
+                    attributes: ['id', 'nombre', 'fecha_inicio', 'fecha_fin']
+                }
+            }
+        }
+    });
+
+    for (const jugador of jugadores) {
+        const equipo = jugador.Equipo;
+        if (equipo?.EquiposTorneos?.length) {
+            for (const et of equipo.EquiposTorneos) {
+                if (et.Torneo) {
+                    return et.Torneo;
+                }
+            }
+        }
+    }
+
+    return null;
+  },
 };
 
 module.exports = usuarioServices;

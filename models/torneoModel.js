@@ -1,6 +1,9 @@
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
     class Torneo extends Model {
+        static associate(models){
+            Torneo.hasMany(models.EquipoTorneo, { as: 'EquiposTorneos', foreignKey: 'id_torneo' });
+        }
     }
         Torneo.init({
             id: {

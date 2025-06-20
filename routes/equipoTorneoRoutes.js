@@ -17,4 +17,6 @@ router.delete('/eliminarEquipoTorneo/:id', verificarToken, verificarAdmin, equip
 router.get('/cantidadEquiposTorneo/:id', verificarToken, equipoTorneoController.obtenerCantidadEquiposTorneo);
 //obtener equipo por id
 router.get('/obtenerEquipo/:id', verificarToken, equipoTorneoController.obtenerEquipo);
+//campeon
+router.put('/campeon/:id', verificarToken, verificarAdmin, equipoTorneoController.campeon);
 module.exports = router;

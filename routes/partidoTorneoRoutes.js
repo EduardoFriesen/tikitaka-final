@@ -10,7 +10,9 @@ router.get('/obtenerPartidos/:id_torneo', verificarToken, partidoTorneoControlle
 // Obtener partidos por equipo
 router.get('/obtenerPartidosPorEquipo/:id_equipo', verificarToken, partidoTorneoController.obtenerPartidosPorEquipo);
 // Actualizar partido
-router.put('/actualizarPartido/:id', verificarToken, verificarAdmin, partidoTorneoController.actualizarPartido);
+router.put('/actualizarPartido/:id_torneo', verificarToken, verificarAdmin, partidoTorneoController.actualizarPartido);
+// Configurar Fecha
+router.put('/confFecha/:id_torneo', verificarToken, verificarAdmin, partidoTorneoController.confFecha);
 // Obtener partidos de torneos por jugador
 router.get('/obtenerPartidosDeTorneosPorJugador/:id_jugador', verificarToken, partidoTorneoController.obtenerPartidosDeTorneosPorJugador);
 // Clasificar 

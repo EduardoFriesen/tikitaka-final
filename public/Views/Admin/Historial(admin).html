@@ -39,64 +39,27 @@
 
 
 <div class="container mt-4">
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>Historial de Partidos</h2>
-    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalCrear">Registrar Resultado</button>
-  </div>
-
   <table class="table table-striped table-bordered">
     <thead class="table-success">
       <tr>
-        <th>Equipo 1</th>
-        <th>Goles E1</th>
-        <th>Equipo 2</th>
-        <th>Goles E2</th>
-        <th>Resultado</th>
-        <th>Fecha</th>
         <th>Torneo</th>
+        <th>Fecha Inicio</th>
+        <th>Fecha Fin</th>
+        <th>Campeon</th>
         <th>Acciones</th>
       </tr>
     </thead>
-    <tbody id="tablaHistorial">
+    <tbody id="torneos">
     </tbody>
   </table>
 </div>
 
-<div class="modal fade" id="modalCrear" tabindex="-1" aria-labelledby="modalCrearLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form id="formCrearResultado">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalCrearLabel">Registrar Resultado</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-        </div>
-        <div class="modal-body">
-          <div class="mb-3"><label class="form-label">Equipo 1</label><input type="text" class="form-control" name="equipo1" required></div>
-          <div class="mb-3"><label class="form-label">Goles E1</label><input type="number" class="form-control" name="goles1" required></div>
-          <div class="mb-3"><label class="form-label">Equipo 2</label><input type="text" class="form-control" name="equipo2" required></div>
-          <div class="mb-3"><label class="form-label">Goles E2</label><input type="number" class="form-control" name="goles2" required></div>
-          <div class="mb-3"><label class="form-label">Resultado</label><input type="text" class="form-control" name="resultado" required></div>
-          <div class="mb-3"><label class="form-label">Fecha</label><input type="date" class="form-control" name="fecha" required></div>
-          <div class="mb-3"><label class="form-label">Torneo</label><input type="text" class="form-control" name="torneo" required></div>
-        </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Guardar</button>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
-<script src="/Js/adminHistorial"></script>
+<script src="/Js/adminHistorial.js"></script>
+<script src="/Js/adminTorneos.js"></script>
 <script src="/Js/sesion.js"></script>
 <script src="/Js/desplegables.js"></script>
 <script>
-  document.getElementById("formCrearResultado").addEventListener("submit", function(e) {
-    e.preventDefault();
-    crearResultado(); // Funcion que permite crear el resultado
-  });
   cargarHistorial(); // funcion que permite guardar el resultado
 </script>
 </body>

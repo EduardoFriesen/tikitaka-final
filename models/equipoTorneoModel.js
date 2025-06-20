@@ -1,4 +1,4 @@
-const { Model } = require('sequelize');
+const { Model, BOOLEAN } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
     class EquipoTorneo extends Model {
         static associate(models) {
@@ -29,6 +29,11 @@ module.exports = (sequelize, DataTypes) => {
                 key: 'id'
             }
         },
+        campeon: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        }
     },{
         sequelize,
         modelName: 'EquipoTorneo',

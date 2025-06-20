@@ -17,5 +17,8 @@ router.delete('/eliminarTorneo/:id', verificarToken, verificarAdmin, torneoContr
 router.put('/confirmarTorneo/:id', verificarToken, verificarAdmin, torneoController.confirmarTorneo);
 // Finalizar torneo
 router.put('/finalizarTorneo/:id', verificarToken, verificarAdmin, torneoController.finalizarTorneo);
-
+// torneos dinalizados
+router.get('/cargarFinalizados', verificarToken, verificarAdmin, torneoController.cargarFinalizados);
+//torneos Jugador
+router.get('/Historial', verificarToken, torneoController.Historial);
 module.exports = router;

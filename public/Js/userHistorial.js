@@ -1,12 +1,13 @@
 async function cargarHistorial(){
     const torneosList = document.getElementById('torneos');
-
-    try {
+    try{
         const token = localStorage.getItem('token');
-        const res = await fetch('/api/torneos/cargarFinalizados', {
-            headers: { 'Authorization': 'Bearer ' + token }
+        const res = await fetch(`/api/torneos/Historial`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         });
-        const data = await res.json();
+    const data = await res.json();
         if (!data.success || !data.torneos || data.torneos.length === 0) {
             torneosList.innerHTML = '<p style="color:#edcd3d;">No hay Torneos.</p>';
             return;
@@ -22,15 +23,15 @@ async function cargarHistorial(){
             <td>${torneo.nombre}</td>
             <td>${formatearFecha(torneo.fecha_inicio)}</td>
             <td>${formatearFecha(torneo.fecha_inicio)}</td>
-            <td>${torneo.campeon}</td>
+            <td>Campeon</td>
             <td>
                 <button type="button" class="btn btn-primary" onclick="ingresarTorneo(${torneo.id})">Detalle</button>
             </td>
                 `;
             torneosList.appendChild(card);
         }
-    } catch (error) {
-        console.error('Error al cargar los partidos:', error);
-        usuariosList.innerHTML = '<p style="color:#edcd3d;">Error al cargar los partidos</p>';
-    }
+    }catch{
+        console.error('Error al cargar los p:', error);
+        torneosList.innerHTML = '<p style="color:#edcd3d;">Error al cargar el Historial</p>';
+    }    
 }

@@ -2,15 +2,15 @@ const equipoTorneoServices = require('../services/equipoTorneoServices');
 const equipoTorneoController = {
     // Crear equipo en torneo
     ingresarEquipoTorneo: async (req, res) => {
-    try {
-        const { nombre } = req.body;
-        const id_torneo = req.params.id;
-        const equipo = await equipoTorneoServices.ingresarEquipoTorneoNombre({ nombre, id_torneo });
-        res.send({ success: true, equipo });
-    } catch (error) {
-        res.send({ success: false, message: error.message });
-    }
-},
+        try {
+            const { nombre } = req.body;
+            const id_torneo = req.params.id;
+            const equipo = await equipoTorneoServices.ingresarEquipoTorneoNombre({ nombre, id_torneo });
+            res.send({ success: true, equipo });
+        } catch (error) {
+            res.send({ success: false, message: error.message });
+        }
+    },
     obtenerEquipo: async (req, res) => {
         try{
             const id_equipo = req.params.id;
@@ -18,6 +18,16 @@ const equipoTorneoController = {
             res.send({ success: true, equipo });
         }catch{
             res.send({ success: false, message: error.message });  
+        }
+    },
+
+    campeon: async (req, res) => {
+        try{
+            const id_equipo = req.params.id;
+            const equipo = await equipoTorneoServices.campeon(id_equipo);
+            res.send({ success: true, equipo});
+        }catch{
+            res.send({ success: false, message: error.message }); 
         }
     },
 

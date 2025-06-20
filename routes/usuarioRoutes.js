@@ -5,7 +5,6 @@ const verificarToken = require('../middlewares/authMiddleware');
 const verificarAdmin = require('../middlewares/adminMiddleware');
 // Login
 router.post('/login', usuarioController.login);
-
 // Registro
 router.post('/register', usuarioController.register);
 
@@ -26,6 +25,12 @@ router.get('/cargarUsers', verificarToken, verificarAdmin, usuarioController.get
 
 // Contar usuarios (solo admin)
 router.get('/cantUsuarios', verificarToken, verificarAdmin, usuarioController.countUsers);
+
+//torneos Finalizados del usuario
+router.get('/cargarTorneos/:id', verificarToken, usuarioController.obtenerTorneosDeUsuario);
+
+router.get('/obtenerId/:id', verificarToken, usuarioController.obtenerIdTorneo);
+
 
 // Logout (opcional, solo para frontend)
 router.post('/logout', usuarioController.logout);

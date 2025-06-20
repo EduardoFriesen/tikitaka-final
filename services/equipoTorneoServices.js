@@ -28,6 +28,14 @@ const equipoTorneoServices = {
             {model: Equipo, as: 'Equipo'}
         ]});
     },
+    campeon: async (id_equipo) => {
+        const equipoTorneo = await EquipoTorneo.findByPk(id_equipo);
+        if (!equipoTorneo) throw new Error('Equipo en torneo no encontrado');
+        equipoTorneo.campeon = true;
+        await equipoTorneo.save();
+        return equipoTorneo;
+    },
+
     // Obtener equipos por ID de torneo
     obtenerEquiposPorIdTorneo: async (id_torneo) => {
         const equipos = await EquipoTorneo.findAll({

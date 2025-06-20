@@ -7,6 +7,8 @@ const partidoTorneoServices = {
             if (!equipo1) throw new Error('Equipo 1 no encontrado');
             const equipoTorneo1 = await EquipoTorneo.findOne({where: {id_equipo: equipo1.id, id_torneo: id_torneo}})
             if (!equipoTorneo1) throw new Error('Equipo 1 no se encuentra en el torneo');
+            const fechaOcupada = await partidoTorneo.findOne({where: {id_torneo: id_torneo ,nroFecha : nroFecha}});
+            if (fechaOcupada) throw new Error('Ya esta ocupada la fecha');
             const partido = await partidoTorneo.create({
                 id_torneo,
                 fecha,
@@ -19,6 +21,8 @@ const partidoTorneoServices = {
             if (!equipo2) throw new Error('Equipo 2 no encontrado');
             const equipoTorneo2 = await EquipoTorneo.findOne({where: {id_equipo: equipo2.id, id_torneo: id_torneo}})
             if (!equipoTorneo2) throw new Error('Equipo 2 no se encuentra en el torneo');
+            const fechaOcupada = await partidoTorneo.findOne({where: {id_torneo: id_torneo, nroFecha : nroFecha}});
+            if (fechaOcupada) throw new Error('Ya esta ocupada la fecha');
             const partido = await partidoTorneo.create({
                 id_torneo,
                 fecha,
@@ -35,6 +39,8 @@ const partidoTorneoServices = {
             if (!equipo2) throw new Error('Equipo 2 no encontrado');
             const equipoTorneo2 = await EquipoTorneo.findOne({where: {id_equipo: equipo2.id, id_torneo: id_torneo}})
             if (!equipoTorneo2) throw new Error('Equipo 2 no se encuentra en el torneo');
+            const fechaOcupada = await partidoTorneo.findOne({where: {id_torneo: id_torneo, nroFecha : nroFecha}});
+            if (fechaOcupada) throw new Error('Ya esta ocupada la fecha');
             const partido = await partidoTorneo.create({
                 id_torneo,
                 fecha,
@@ -103,12 +109,21 @@ const partidoTorneoServices = {
         });
     },
     // Actualizar partido
-    actualizarPartido: async (id, { goles_1, goles_2}) => {
-        console.log(goles_1, goles_2, id);
-        const partido = await partidoTorneo.findByPk(id);
+    actualizarPartido: async (id_torneo, { goles_1, goles_2, nroFecha}) => {
+        console.log('service dice :'+goles_1, goles_2, id_torneo);
+        const partido = await partidoTorneo.findOne({where : {id_torneo, nroFecha}});
         if (!partido) throw new Error('Partido no encontrado');
         partido.goles_1 = goles_1;
         partido.goles_2 = goles_2;
+        await partido.save();
+        return partido;
+    },
+    //configuro la Fecha
+    confFecha: async (id_torneo, { fecha, nroFecha}) => {
+        console.log('services:' + id_torneo, fecha, nroFecha);
+        const partido = await partidoTorneo.findOne({where : {id_torneo, nroFecha}});
+        if (!partido) throw new Error('Partido no encontrado');
+        partido.fecha = fecha;
         await partido.save();
         return partido;
     },

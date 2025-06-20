@@ -37,10 +37,10 @@ const partidoTorneoController = {
     // Actualizar partido
     actualizarPartido: async (req, res) => {
         try {
-            const id = req.params.id;
-            const { goles_1, goles_2 } = req.body;
-            console.log(goles_1, goles_2, id);
-            const partido = await partidoTorneoServices.actualizarPartido(id, { goles_1, goles_2});
+            const id_torneo = req.params.id_torneo;
+            const { goles_1, goles_2, nroFecha } = req.body;
+            console.log('controller dice :'+goles_1, goles_2, id_torneo);
+            const partido = await partidoTorneoServices.actualizarPartido(id_torneo, { goles_1, goles_2, nroFecha});
             res.send({ success: true, partido });
         } catch (error) {
             res.send({ success: false, message: error.message });
@@ -65,6 +65,18 @@ const partidoTorneoController = {
         } catch (error) {
             res.send({ success: false, message: error.message });
         }
-    }
+    },
+
+    confFecha: async (req, res) => {
+        try {
+            const id_torneo = req.params.id_torneo;
+            const { fecha, nroFecha } = req.body;
+            console.log('controller:' + id_torneo, fecha, nroFecha);
+            const partido = await partidoTorneoServices.confFecha(id_torneo, { fecha, nroFecha});
+            res.send({ success: true, partido });
+        } catch (error) {
+            res.send({ success: false, message: error.message });
+        }
+    },
 };
 module.exports = partidoTorneoController;

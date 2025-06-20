@@ -22,6 +22,15 @@ const torneoController = {
         }
     },
 
+    cargarFinalizados: async (req, res) => {
+        try {
+            const torneos = await torneoServices.cargarFinalizados();
+            res.send({ success: true, torneos });
+        } catch (error) {
+            res.send({ success: false, message: error.message });
+        }
+    },
+
     // Obtener torneo por ID
     obtenerTorneoPorId: async (req, res) => {
         try {
@@ -70,11 +79,23 @@ const torneoController = {
     finalizarTorneo: async (req, res) => {
         try {
             const id = req.params.id;
+            console.log(id);
             const torneo = await torneoServices.finalizarTorneo(id);
             res.send({ success: true, torneo });
         } catch (error) {
             res.send({ success: false, message: error.message });
         }
-    }
+    },
+
+    Historial: async (req, res)=>{
+        try {
+            const id_usuario = req.user.id;
+            console.log('idUser Controller:' + id);
+            const torneos = await torneoServices.Historial(id_usuario);
+            res.send({ success: true, torneos });
+        } catch (error) {
+            res.send({ success: false, message: error.message });
+        }
+    },
 };
 module.exports = torneoController;
