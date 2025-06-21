@@ -4,11 +4,16 @@ const equipoTorneoServices = {
     ingresarEquipoTorneoNombre: async ({ nombre, id_torneo }) => {
         const equipo = await Equipo.findOne({ where: { nombre } });
         if (!equipo) throw new Error('Equipo no encontrado');
-        const nuevoEquipo = await EquipoTorneo.create({
-            id_equipo: equipo.id,
-            id_torneo
-        });
-        return nuevoEquipo;
+        const existente = await EquipoTorneo.findOne({where:{ id_equipo: equipo.id, id_torneo: id_torneo}});
+        if(!existente){
+            const nuevoEquipo = await EquipoTorneo.create({
+                id_equipo: equipo.id,
+                id_torneo
+            });
+            return nuevoEquipo;
+        }else{
+            return { message: 'El Equipo ya esta en el Torneo' };
+        }
     },
 
     // Obtener todos los equipos en un torneo

@@ -1,11 +1,14 @@
-const { Usuario, Equipo, Jugador } = require('../models');
+const { Usuario, Equipo, Jugador, EquipoTorneo, Torneo } = require('../models');
 const jugadorServices = {
     // Crear jugador
     ficharJugadorPorUsername: async ({ username, id_equipo, camiseta }) => {
-    const user = await Usuario.findOne({ where: { username } });
-    if (!user) throw new Error('Usuario no encontrado');
+    console.log('services: ' + username, camiseta, id_equipo);
 
-    // Buscar todos los equipos donde jugó
+    const user = await Usuario.findOne({ where: { username } });
+
+    if (!user) throw new Error('Usuario no encontrado');
+    console.log(' se encontro el usuario' + user.id + user.username);
+    // Verificar si ya fue fichado en algún torneo activo
     const jugadoresPrevios = await Jugador.findAll({
         where: { id_usuario: user.id },
         include: {
@@ -23,28 +26,37 @@ const jugadorServices = {
             }
         }
     });
-
-    // Revisar si participa en algún torneo no finalizado
-    for (const jugador of jugadoresPrevios) {
-        const equipo = jugador.Equipo;
-        if (equipo?.EquiposTorneos) {
-            for (const et of equipo.EquiposTorneos) {
-                if (et.Torneo) {
-                    throw new Error(`El jugador ya está en el torneo "${et.Torneo.nombre}" que no ha finalizado.`);
-                }
-            }
+    console.log('antes jugadores previos');
+    
+    
+    if (jugadoresPrevios.length > 0) {
+        throw new Error('El jugador ya está inscrito en un torneo activo');
+    }
+    console.log('paso jugadores previos');
+    // Verificar si ya está fichado en el mismo equipo (aunque no esté en torneo activo)
+    console.log('ficahado o no');
+    const yaFichadoEnEseEquipo = await Jugador.findOne({
+        where: {
+            id_usuario: user.id,
+            id_equipo
         }
+    });
+    if (yaFichadoEnEseEquipo) {
+        throw new Error('El jugador ya está fichado en este equipo');
     }
 
-    // Si no está en torneos activos, se crea el jugador
+
+    // Crear jugador
+    console.log('Paso previo a crear el jugador');
     const nuevoJugador = await Jugador.create({
         id_usuario: user.id,
         id_equipo,
         camiseta
     });
-
+    console.log('Jugador creado exitosamente:', nuevoJugador);
     return nuevoJugador;
 },
+
 
     obtenerJugadoresPorEquipo: async (id_equipo) => {
         return await Jugador.findAll({

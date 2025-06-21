@@ -6,6 +6,7 @@ const jugadorController = {
         try {
             const id_equipo = req.params.id;
             const { username, camiseta } = req.body;
+            console.log('controller: '+ username, camiseta);
             const jugador = await jugadorServices.ficharJugadorPorUsername({ username, id_equipo, camiseta });
             res.send({ success: true, jugador });
         } catch (error) {

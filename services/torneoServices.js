@@ -1,4 +1,4 @@
-const { Torneo, partidoTorneo, EquipoTorneo, Equipo } = require('../models');
+const { Torneo, partidoTorneo, EquipoTorneo, Equipo, Jugador } = require('../models');
 const { Op } = require('sequelize');
 const torneoServices = {
     
@@ -102,20 +102,64 @@ const torneoServices = {
     },
 
     Historial: async (id_usuario) => {
-  console.log('idUser Services:' + id_usuario);
-  const [torneos] = await sequelize.query(`
-    SELECT DISTINCT t.id, t.nombre, t.fecha_inicio, t.fecha_fin
-    FROM torneos t
-    JOIN equipos_torneos et ON t.id = et.id_torneo
-    JOIN equipos e ON e.id = et.id_equipo
-    JOIN jugadores j ON j.id_equipo = e.id
-    WHERE j.id_usuario = :idUsuario AND t.finalizado = true
-  `, {
-    replacements: { idUsuario: id_usuario },
-    type: sequelize.QueryTypes.SELECT
+  console.log('id usuario: ' + id_usuario);
+
+  // Buscar todos los torneos finalizados donde el usuario jugó
+  const jugadores = await Jugador.findAll({
+    where: { id_usuario },
+    include: {
+      model: Equipo,
+      as: 'Equipo',
+      include: {
+        model: EquipoTorneo,
+        as: 'EquiposTorneos',
+        include: {
+          model: Torneo,
+          as: 'Torneo',
+          where: { finalizado: true },
+          attributes: ['id', 'nombre', 'fecha_inicio', 'fecha_fin']
+        }
+      }
+    }
   });
 
-  return torneos;
-},
+  const torneosUnicos = new Map();
+
+  for (const jugador of jugadores) {
+    const equipo = jugador.Equipo;
+    if (!equipo?.EquiposTorneos?.length) continue;
+
+    for (const et of equipo.EquiposTorneos) {
+      const torneo = et.Torneo;
+      if (!torneo || torneosUnicos.has(torneo.id)) continue;
+
+      // 🔥 Buscamos el campeón del torneo (igual que en `cargarFinalizados`)
+      const campeonEntry = await EquipoTorneo.findOne({
+        where: {
+          id_torneo: torneo.id,
+          campeon: true
+        },
+        include: {
+          model: Equipo,
+          as: 'Equipo',
+          attributes: ['nombre']
+        }
+      });
+
+      const nombreCampeon = campeonEntry?.Equipo?.nombre || 'Sin definir';
+
+      torneosUnicos.set(torneo.id, {
+        id: torneo.id,
+        nombre: torneo.nombre,
+        fecha_inicio: torneo.fecha_inicio,
+        fecha_fin: torneo.fecha_fin,
+        campeon: nombreCampeon
+      });
+    }
+  }
+
+  return Array.from(torneosUnicos.values());
+}
+
 };
 module.exports = torneoServices;

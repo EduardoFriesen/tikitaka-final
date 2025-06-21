@@ -5,11 +5,11 @@ const equipoController = {
     // Crear equipo
     crearEquipo: async (req, res) => {
         try {
-        const { nombre } = req.body;
-        const equipo = await equipoServices.crearEquipo({ nombre });
-        res.send({ success: true, equipo });
+            const { nombre } = req.body;
+            const equipo = await equipoServices.crearEquipo({ nombre });
+            res.send({ success: true, equipo });
         } catch (error) {
-        res.send({ success: false, message: error.message });
+            res.send({ success: false, message: error.message });
         }
     },
     

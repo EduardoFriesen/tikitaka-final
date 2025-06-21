@@ -86,16 +86,17 @@ const torneoController = {
             res.send({ success: false, message: error.message });
         }
     },
-
     Historial: async (req, res)=>{
-        try {
+        try{
+            console.log('id usuario: ');
             const id_usuario = req.user.id;
-            console.log('idUser Controller:' + id);
             const torneos = await torneoServices.Historial(id_usuario);
-            res.send({ success: true, torneos });
-        } catch (error) {
+            console.log(torneos);
+            res.send({ success: true, torneos });  
+        }catch{
             res.send({ success: false, message: error.message });
         }
+        
     },
 };
 module.exports = torneoController;

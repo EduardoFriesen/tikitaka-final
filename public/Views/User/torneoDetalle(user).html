@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Usuario - Torneos</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+  <style>
+        .cerrar-sesion{
+            text-align: center;
+            font-weight: bold;
+            position: absolute;
+            color: white;
+            bottom: 10px;
+            width: 100%;
+        }
+
+
+    </style>
+  <link rel="stylesheet" href="/Styles/Partidos(admin).css">
+</head>
+<body style="background-color:  rgba(182, 194, 179, 1);">
+
+
+<div class="container-fluid m-0">
+  <div class="row" style="background-color: rgba(82, 131, 71, 1);">
+    <div class="col-3">
+      <a class="btn" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" style="color: white; font-size: 40px;">
+        <img src="/img/logo.png" alt="" style="height: 70px;"> TikiTaka
+      </a>
+    </div>
+    <div id="torneo" class="col d-flex align-items-center" style="color: white; font-size: 40px;"></div>
+    <div id="idTorneo" class="col d-flex align-items-center" style="color: white; font-size: 20px;"></div>
+    <div id="fechaInicio" class="col d-flex align-items-center" style="color: white; font-size: 20px;"></div>
+    <div id="fechaFin" class="col d-flex align-items-center" style="color: white; font-size: 20px;"></div>
+    
+  </div>
+</div>
+
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header" style="background-color: rgba(82, 131, 71, 1);">
+    <img src="/img/logo.png" alt="" style="height: 40px;">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel" style="color: white;">TikiTaka</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+  </div>
+  <div class="offcanvas-body" style="background-color: rgba(82, 131, 71, 1);">
+    <div class="row">
+      <button type="button" id="boton" onclick="window.location.href='Dashboard(admin).html'" class="btn btn-lg">DashBoard</button>
+    </div>
+    <div class="row">
+      <button type="button" id="boton" onclick="window.location.href='Partidos(admin).html'" class="btn btn-lg">Partidos</button>
+    </div> 
+    <div class="row">
+      <button type="button" id="boton" onclick="window.location.href='equipos(admin)'" class="btn btn-lg">Equipos</button>
+    </div>
+    <div class="row">
+      <button type="button" id="boton" onclick="window.location.href='Jugadores(admin).html'" class="btn btn-lg">Jugadores</button>
+    </div>
+    <div class="row">
+      <button type="button" id="boton" onclick="window.location.href='#'" class="btn btn-lg">Historial</button>
+    </div>
+     <div class="cerrar-sesion">
+                Asistencia <br>
+                <a href="#" onclick="logout()">Cerrar sesión</a>
+        </div>
+  </div>
+</div>
+
+<button type="button" class="btn btn-success" onclick="window.location.href='torneoEquipos(admin).html'" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+  Ingresar Equipos
+</button>
+ <div class="container-fluid" style="padding-left: 100px; padding-right: 100px;">
+  <div class="row d-flex justify-content-center align-items-center m-3" style="font-size: 30px;">Cuartos de Final</div>
+    <br>
+    <div class="row ">
+      <div class="col-3 d-flex justify-content-center align-items-center" >
+        <div class="card" style="width: 18rem;">
+          <img src="/img/Cómo-hacer-una-cancha-de-fútbol.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <input type="hidden" id="id_partido_1">
+            <h5 class="card-title">Primera de Cuartos</h5>
+            <p id = "e11" class="card-text">Equipo 1</p>
+            <p id = "e12" class="card-text">Equipo 2</p>
+            <p id = "fecha1" class="card-text"></p>
+            <p id = "g11" class="card-text">N/A</p>
+            <p id = "g12" class="card-text">N/A</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-3 d-flex justify-content-center align-items-center" >
+        <div class="card" style="width: 18rem;">
+          <img src="/img/Cómo-hacer-una-cancha-de-fútbol.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <input type="hidden" id="id_partido_2">
+            <h5 class="card-title">Segunda de Cuartos</h5>
+            <p id = "e21" class="card-text">Equipo 1</p>
+            <p id = "e22" class="card-text">Equipo 2</p>
+            <p id = "fecha2" class="card-text"></p>
+            <p id = "g21" class="card-text">0</p>
+            <p id = "g22" class="card-text">0</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-3 d-flex justify-content-center align-items-center" >
+        <div class="card" style="width: 18rem;">
+          <img src="/img/Cómo-hacer-una-cancha-de-fútbol.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <input type="hidden" id="id_partido_3">
+            <h5 class="card-title">Tercera de Cuartos</h5>
+            <p id = "e31" class="card-text">Equipo 1</p>
+            <p id = "e32" class="card-text">Equipo 2</p>
+            <p id = "fecha3" class="card-text"></p>
+            <p id = "g31" class="card-text">0</p>
+            <p id = "g32" class="card-text">0</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-3 d-flex justify-content-center align-items-center" >
+        <div class="card" style="width: 18rem;">
+          <img src="/img/Cómo-hacer-una-cancha-de-fútbol.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <input type="hidden" id="id_partido_4">
+            <h5 class="card-title">Cuarto de Cuartos</h5>
+            <p id = "e41" class="card-text">Equipo 1</p>
+            <p id = "e42" class="card-text">Equipo 2</p>
+            <p id = "fecha4" class="card-text"></p>
+            <p id = "g41" class="card-text">0</p>
+            <p id = "g42" class="card-text">0</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row d-flex justify-content-center align-items-center m-3" style="font-size: 30px;">Semifinales</div>
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-3 d-flex justify-content-center align-items-center" >
+          <div class="card" style="width: 18rem;">
+            <img src="/img/Cómo-hacer-una-cancha-de-fútbol.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <input type="hidden" id="id_partido_5">
+              <h5 class="card-title">Primera Semifinal</h5>
+              <p id = "e51" class="card-text">Equipo 1</p>
+              <p id = "e52" class="card-text">Equipo 2</p>
+              <p id = "fecha5" class="card-text"></p>
+              <p id = "g51" class="card-text">0</p>
+              <p id = "g52" class="card-text">0</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-3 d-flex justify-content-center align-items-center" >
+          <div class="card" style="width: 18rem;">
+            <img src="/img/Cómo-hacer-una-cancha-de-fútbol.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <input type="hidden" id="id_partido_6">
+              <h5 class="card-title">Segunda de Semifinal</h5>
+              <p id = "e61" class="card-text">Equipo 1</p>
+              <p id = "e62" class="card-text">Equipo 2</p>
+              <p id = "fecha6" class="card-text"></p>
+              <p id = "g61" class="card-text">0</p>
+              <p id = "g62" class="card-text">0</p>
+            </div>
+          </div>
+        </div>   
+      </div>
+      <div class="row d-flex justify-content-center align-items-center  m-3" style="font-size: 30px;">Final</div>
+      <br>
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-3 d-flex justify-content-center align-items-center" >
+          <div class="card" style="width: 18rem;">
+            <img src="/img/Cómo-hacer-una-cancha-de-fútbol.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <input type="hidden" id="id_partido_7">
+              <h5 class="card-title">Final</h5>
+              <p id = "e71" class="card-text">Equipo 1</p>
+              <p id = "e72" class="card-text">Equipo 2</p>
+              <p id = "fecha7" class="card-text"></p>
+              <p id = "g71" class="card-text">0</p>
+              <p id = "g72" class="card-text">0</p>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+<div id="message" style="display:none;"></div>   
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="/Js/adminTorneos.js"></script>
+<script src="/Js/desplegables.js"></script>
+<script src="/Js/sesion.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    cargar();
+    cargarPartidos();
+  });
+</script>
+</body>
+</html>

@@ -64,5 +64,43 @@ async function cargarPartidos() {
 
 async function ingresarTorneo(idTorneo) {
     localStorage.setItem('idTorneo', idTorneo);
-    window.location.href = '/Views/User/torneoDetalle(admin).html';
+    window.location.href = '/Views/User/torneoDetalle(user).html';
 }
+
+async function cargar() {
+    const idTorneo = localStorage.getItem('idTorneo');
+    if (!idTorneo) {
+        alert('No se ha seleccionado un torneo. Por favor, selecciona un torneo primero.');
+        return;
+    }
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = '/Views/Login/login.html';
+        return;
+    }
+    try {
+        const res = await fetch(`/api/torneos/obtenerTorneo/${idTorneo}`, {
+            method: 'GET',
+            headers: {
+            'Authorization': `Bearer ${token}`
+            }
+        });
+        if (res.status === 401 || res.status === 403) {
+            window.location.href = '/Views/Login/login.html';
+            return;
+        }
+        const data = await res.json();
+        if (!data.success) {
+            alert('Error al cargar el torneo: ' + data.message);
+            return;
+        }
+        document.getElementById('torneo').textContent = data.torneo.nombre;
+        document.getElementById('fechaInicio').textContent = formatearFecha(data.torneo.fecha_inicio);
+        document.getElementById('fechaFin').textContent = formatearFecha(data.torneo.fecha_fin);
+        document.getElementById('idTorneo').value = idTorneo;
+    } catch (error) {
+        console.error('Error al cargar el torneo:', error);
+        alert('Ocurrió un error al cargar el torneo. Inténtalo de nuevo más tarde.');
+    }
+}
+
