@@ -35,7 +35,6 @@
   </div>
 </div>
 
-
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
   <div class="offcanvas-header" style="background-color: rgba(82, 131, 71, 1);">
     <img src="/img/logo.png" alt="" style="height: 40px;">
@@ -56,8 +55,12 @@
       <button type="button" id="boton" onclick="window.location.href='Jugadores(admin).html'" class="btn btn-lg">Jugadores</button>
     </div>
     <div class="row">
-      <button type="button" id="boton" onclick="window.location.href='#'" class="btn btn-lg">Historial</button>
+      <button type="button" id="boton" onclick="window.location.href='Historial(admin).html'" class="btn btn-lg">Historial</button>
     </div>
+    <div class="row">
+      <button type="button" id="boton" onclick="window.location.href='torneos(admin).html'" class="btn btn-lg">Torneos</button>
+  </div>
+</div>
      <div class="cerrar-sesion">
                 Asistencia <br>
                 <a href="#" onclick="logout()">Cerrar sesión</a>
@@ -111,8 +114,8 @@
     </div>
   </div>
 </div>
-<!-- Ubiquen bien este boton -->
-<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#crearModal">
+
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#crearModal" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
   Crear Torneo
 </button>
 

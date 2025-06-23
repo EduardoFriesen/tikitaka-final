@@ -21,6 +21,12 @@ async function crearPartidoAdmin() {
         window.location.href = 'login.html';
         return;
     }
+    if (jugadores < 1 || jugadores > 14) {
+        msgDiv.style.display = 'block';
+        msgDiv.className = "alert alert-warning d-flex align-items-center text-center";
+        msgDiv.innerText = "El número de jugadores debe estar entre 1 y 14.";
+        return;
+    }
     const data = await res.json();
     if (data.success) {
         msgDiv.style.display = 'block';

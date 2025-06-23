@@ -53,8 +53,8 @@ async function cargarEquipos() {
             const li = document.createElement('li');
             li.className = 'list-group-item d-flex justify-content-between align-items-center';
             li.innerHTML += `
-                <div class="card" style="width: 18rem;">
-                    <img src="/img/Cómo-hacer-una-cancha-de-fútbol.jpg" class="card-img-top" alt="...">
+                <div class="card m-3" style="width: 16rem;">
+                    <img src="/img/escudo.jpg" class="card-img-top" alt="...">
                     <div class="card-body">
                         <form id="fichajeForm">
                             <input type="hidden" id="id_equipo" value="${equipo.id}">

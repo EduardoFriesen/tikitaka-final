@@ -44,7 +44,16 @@ async function crearTorneo() {
         alert('Por favor, completa todos los campos.');
         return;
     }
+    if (new Date(fechaInicio) >= new Date(fechaFin)) {
+        alert('La fecha de inicio debe ser anterior a la fecha de finalización.');
+        return;
+    }
 
+    if (new Date(fechaInicio) < new Date()) {
+        alert('La fecha de inicio no puede ser anterior a la fecha actual.');
+        return;
+    }
+    
     try {
         const token = localStorage.getItem('token');
         const response = await fetch('/api/torneos/crearTorneo', {
