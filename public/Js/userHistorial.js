@@ -52,3 +52,8 @@ function formatearFecha(fechaISO) {
     const anio = String(fecha.getFullYear()).slice(-2);
     return `${dia}/${mes}/${anio}`;
 }
+
+async function ingresarTorneo(idTorneo) {
+    localStorage.setItem('idTorneo', idTorneo);
+    window.location.href = '/Views/Admin/torneoDetalle(user).html';
+}

@@ -1,5 +1,6 @@
 async function cargarPartidos() {
     const token = localStorage.getItem('token');
+    const torneo = getElementById('torneo');
     const res = await fetch(`/api/partidosTorneo/obtenerIdTorneo/${req.user.id}`, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -12,9 +13,7 @@ async function cargarPartidos() {
             return;
         }
     for(const torneo of data.torneos){ 
-        document.getElementById('torneo').textContent = data.torneo.nombre;
-        document.getElementById('fechaInicio').textContent = formatearFecha(data.torneo.fecha_inicio);
-        document.getElementById('fechaFin').textContent = formatearFecha(data.torneo.fecha_fin);
+        torneo.innerHTML=`torne`;
          try {
         const res = await fetch(`/api/partidosTorneo/obtenerPartidos/${torneo.id_torneo}`, {
             headers: {

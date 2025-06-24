@@ -108,7 +108,6 @@ async function mostrarTorneos() {
             } else {
                 botones = `
                     <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#modalEliminar" onclick="cargarEliminarTorneo('${torneo.id}')">Eliminar</button>
-                    <button type="button" class="btn btn-warning" onclick="finalizarTorneo(${torneo.id})">Finalizar</button>
                     <button type="button" class="btn btn-primary" onclick="ingresarTorneo(${torneo.id})">Ingresar</button>
                 `;
             }
@@ -621,6 +620,7 @@ async function cargarClasificatoria(){
         body: JSON.stringify({fecha: fecha2, nroFecha: nroFecha})
     });
     const data = await res.json();
+    location.reload();
 }
 
 

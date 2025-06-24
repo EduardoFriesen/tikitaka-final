@@ -121,7 +121,7 @@ async function partidosUsuario(){
             partidosList.innerHTML = '<p style="color:#edcd3d;">Error al obtener usuario logueado.</p>';
             return;
         }
-        const userLoggedInId = userData.id;
+        const userLoggedInId = userData.usuario.id;
 
         const res = await fetch('/api/partidos/propios', {
             headers: { 
@@ -155,7 +155,7 @@ async function partidosUsuario(){
                 cancha = partido.cancha;
             }
             let botones = '';
-            if (partido.owner === userLoggedInId) {
+            if (partido.owner == userLoggedInId) {
                 botones = `
                     <button type="button" class="btn btn-editar btn-sm" data-bs-toggle="modal" data-bs-target="#editarModal" onclick="abrirEditarPartido(${partido.id}, '${partido.fecha}', '${partido.hora}', ${partido.jugadores})">Editar</button>
                     <button class="btn btn-eliminar btn-sm" onclick="eliminarPartido(${partido.id})">Eliminar</button>
@@ -218,9 +218,9 @@ async function fichaje(id_partido){
 async function modificarPartido() {
     const id_partido = document.getElementById('editarModal').getAttribute('data-id');
     const fecha = document.querySelector('#editarModal #fecha').value;
-    const horario = document.querySelector('#editarModal #horario').value;
+    const hora = document.querySelector('#editarModal #horario').value;
     const jugadores = document.querySelector('#editarModal #jugadores').value;
-
+    console.log(id_partido, fecha, horario,jugadores);
     const msgDiv = document.getElementById('message');
     msgDiv.style.display = 'none';
     msgDiv.className = "";
@@ -232,7 +232,7 @@ async function modificarPartido() {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + token
         },
-        body: JSON.stringify({ id_partido, fecha, horario, jugadores })
+        body: JSON.stringify({ id_partido, fecha, hora, jugadores })
     });
     if (res.status === 401 || res.status === 403) {
         window.location.href = 'login.html';
@@ -248,6 +248,18 @@ async function modificarPartido() {
         msgDiv.innerText = data.message;
     }
 }
+function abrirEditarPartido(id, fecha, hora, jugadores) {
+    // Llenar los campos del modal con los datos del partido
+    document.querySelector('#editarModal #jugadores').value = jugadores;
+    document.querySelector('#editarModal #fecha').value = fecha;
+    document.querySelector('#editarModal #horario').value = hora;
+    // Guarda el id en un atributo del modal para usarlo luego
+    document.getElementById('editarModal').setAttribute('data-id', id);
+}
+
+function abrirConfirmarCancha(idPartido) {
+    document.getElementById('partidoAConfirmar').value = idPartido;
+}
 
 async function eliminarPartido(id_partido) {
     const msgDiv = document.getElementById('message');
@@ -261,7 +273,7 @@ async function eliminarPartido(id_partido) {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + token
         },
-        body: JSON.stringify({ id_partido, usernamelog })
+        body: JSON.stringify({ id_partido})
     });
     if (res.status === 401 || res.status === 403) {
         window.location.href = 'login.html';

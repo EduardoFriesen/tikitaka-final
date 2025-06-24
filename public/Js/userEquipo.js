@@ -1,34 +1,49 @@
 async function cargarJugadores() {
-    const idEquipo = localStorage.getItem('idEquipo');
-    console.log('Cargando jugadores para el equipo con ID:', idEquipo);
     const usuariosList = document.getElementById('jugadores');
+    const equipo = document.getElementById('equipo');
     try {
         const token = localStorage.getItem('token');
-        const res = await fetch(`/api/jugadores/equipo/${idEquipo}`, {
+
+        const resEquipo = await fetch(`/api/jugadores/obtenerEquipoUsuario/`, {
             headers: { 'Authorization': 'Bearer ' + token }
         });
-        const data = await res.json();
+        const idData = await resEquipo.json();
+
+        const idEquipo = idData.id_equipo;
+        if (!idEquipo) {
+            usuariosList.innerHTML = '<p style="color:#edcd3d;">No hay equipo asociado.</p>';
+            return;
+        }
+
+        // Paso 2: obtener jugadores del equipo
+        const resJugadores = await fetch(`/api/jugadores/equipo/${idEquipo}`, {
+            headers: { 'Authorization': 'Bearer ' + token }
+        });
+        const data = await resJugadores.json();
+
         if (!data.success || !data.jugadores || data.jugadores.length === 0) {
             usuariosList.innerHTML = '<p style="color:#edcd3d;">No hay Jugadores.</p>';
             return;
         }
+
         usuariosList.innerHTML = '';
         for (const jugador of data.jugadores) {
             const card = document.createElement('tr');
-            card.innerHTML += `
+            card.innerHTML = `
                 <td>${jugador.Usuario.username}</td>
                 <td>${jugador.Usuario.name}</td>
                 <td>${jugador.Usuario.lastname}</td>
                 <td>${jugador.camiseta}</td>
-                <td>
-                    <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditar"
-                        onclick="cargarDatosEditar('${jugador.Usuario.username}', '${jugador.Usuario.name}', '${jugador.Usuario.lastname}', '${jugador.camiseta}', '${jugador.id}')">Editar</button>
-                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalEliminar"
-                        onclick="prepararEliminarUser('${jugador.id}', '${jugador.Usuario.username}')">Eliminar</button>
-                </td>
             `;
             usuariosList.appendChild(card);
         }
+
+        const resp = await fetch(`/api/equipos/obtenerEquipo/${idEquipo}`, {
+            headers: { 'Authorization': 'Bearer ' + token }
+        });
+        const dataEquipo = await resp.json();
+        equipo.innerHTML =`${dataEquipo.equipo.nombre}`;
+
     } catch (error) {
         console.error('Error al cargar los jugadores:', error);
         usuariosList.innerHTML = '<p style="color:#edcd3d;">Error al cargar los jugadores</p>';

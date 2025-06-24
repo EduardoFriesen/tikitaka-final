@@ -119,9 +119,9 @@ const partidoTorneoServices = {
     },
     // Actualizar partido
     actualizarPartido: async (id_torneo, { goles_1, goles_2, nroFecha}) => {
-        console.log('service dice :'+goles_1, goles_2, id_torneo);
         const partido = await partidoTorneo.findOne({where : {id_torneo, nroFecha}});
         if (!partido) throw new Error('Partido no encontrado');
+        if(!partido.fecha) throw new Error('fecha no cargada');
         partido.goles_1 = goles_1;
         partido.goles_2 = goles_2;
         await partido.save();

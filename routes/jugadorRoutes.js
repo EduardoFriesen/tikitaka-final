@@ -13,4 +13,6 @@ router.get('/obtenerJugador/:id', verificarToken, jugadorController.obtenerJugad
 router.put('/actualizarJugador/:id', verificarToken, jugadorController.actualizarJugador);
 // Eliminar jugador
 router.delete('/eliminarJugador/:id', verificarToken, jugadorController.eliminarJugador);
+
+router.get('/obtenerEquipoUsuario', verificarToken, jugadorController.obtenerEquipoUsuario);
 module.exports = router;

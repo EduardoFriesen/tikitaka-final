@@ -92,6 +92,31 @@ const jugadorServices = {
         if (!jugador) throw new Error('Jugador no encontrado');
         await jugador.destroy();
         return { message: 'Jugador eliminado' };
-    }
+    },
+
+obtenerEquipoUsuario: async (idUsuario) => {
+  try {
+    console.log('controller idUsuario: '+idUsuario);
+    const jugador = await Jugador.findOne({ where: { id_usuario: idUsuario } });
+    if (!jugador) return null;
+
+    // Buscar si ese equipo está en un torneo no finalizado
+    const equipoTorneo = await EquipoTorneo.findOne({
+      where: { id_equipo: jugador.id_equipo },
+      include: {
+        model: Torneo,
+        as: 'Torneo', // ⚠️ necesario por el alias en la asociación
+        where: { finalizado: false }
+      }
+    });
+
+    if (!equipoTorneo) return null;
+
+    return equipoTorneo.id_equipo;
+  } catch (error) {
+    console.error('Error en obtenerEquipoUsuario:', error);
+    throw error;
+  }
+},
 };
 module.exports = jugadorServices;

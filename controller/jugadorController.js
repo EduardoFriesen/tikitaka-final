@@ -56,6 +56,25 @@ const jugadorController = {
         } catch (error) {
             res.send({ success: false, message: error.message });
         }
+    },
+    obtenerEquipoUsuario: async (req, res) => {
+     try {
+    const idUsuario = req.user.id; // o req.params.id, según cómo lo llames
+    console.log('controller idUsuario: '+idUsuario);
+    const idEquipo = await jugadorServices.obtenerEquipoUsuario(idUsuario);
+
+    if (!idEquipo) {
+      return res.status(404).json({
+        success: false,
+        message: 'No se encontró equipo en torneo activo para este usuario'
+      });
     }
+
+    return res.json({ success: true, id_equipo: idEquipo });
+  } catch (error) {
+    console.error('Error en obtenerEquipoUsuario:', error);
+    res.status(500).json({ success: false, message: 'Error interno del servidor' });
+  }
+}
 };
 module.exports = jugadorController;
