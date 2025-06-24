@@ -336,7 +336,7 @@ async function cargarEquipos() {
             card.className="m-3";
             card.innerHTML += `
                 <div class="card" style="width: 18rem;">
-                    <img src="/img/Cómo-hacer-una-cancha-de-fútbol.jpg" class="card-img-top" alt="...">
+                    <img src="/img/escudo.jpg" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">${equipo.Equipo.nombre}</h5>
                         <button type="button" class="btn btn-jugadores btn-sm" onclick="jugadores('${equipo.Equipo.id}')">Jugadores</button>
